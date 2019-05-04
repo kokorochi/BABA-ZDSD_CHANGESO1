@@ -1,0 +1,74 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog id="MulDialog" resizable="false" contentWidth="auto" draggable="true">
+		<HBox>
+			<RadioButton groupName="GroupA" text="BOX" id="BOX11" selected="true"/>
+			<RadioButton groupName="GroupA" text="PC" id="PC11"/>
+		</HBox>
+		<!--<TableSelectDialog noDataText="No Products Found" title="Select Product" search="handleSearch" confirm="handleClose" cancel="handleClose"-->
+		<!--      multiSelect="true"-->
+		<!--	items="{ path : '/MATERIALINMULSet', sorter: { path: 'MAKTX' }  }">-->
+		<!--	<ColumnListItem>-->
+		<!--		<cells>-->
+		<!--			<Text id="id1" text="{MATNR}"/>-->
+		<!--			<Text id="id2" text="{MAKTX}"/>-->
+		<!--<Input id="QTY" editable="true" value="{QTY}"/>-->
+		<!--		</cells>-->
+		<!--	</ColumnListItem>-->
+		<!--	<columns>-->
+		<!--		<Column width="12em">-->
+		<!--			<header>-->
+		<!--				<Text text="Product"/>-->
+		<!--			</header>-->
+		<!--		</Column>-->
+		<!--		<Column minScreenWidth="Tablet" demandPopin="true">-->
+		<!--			<header>-->
+		<!--				<Text text="Descriptionr"/>-->
+		<!--			</header>-->
+		<!--		</Column>-->
+		<!--		<Column minScreenWidth="Tablet" demandPopin="true">-->
+		<!--<header>-->
+		<!--	<Text text="Qtyr"/>-->
+		<!--</header>-->
+		<!--		</Column>				-->
+		<!--	</columns>-->
+		<!--</TableSelectDialog>-->
+		<!--<subHeader>-->
+		<!--	<Toolbar>-->
+		<!--		<SearchField width="100%" search="onSearchMul"/>-->
+		<!--	</Toolbar>-->
+		<!--</subHeader>-->
+		<Table id="table1" width="auto" items="{ path : '/MATERIALINMULSet', sorter: { path: 'MAKTX' } }" noDataText="No data fetched"
+			growing="true" growingScrollToLoad="true" mode="MultiSelect">
+			<items>
+				<ColumnListItem>
+					<cells>
+						<Text text="{MATNR}"/>
+						<Text text="{MAKTX}"/>
+						<!--<Input editable="true" value="{QTY}"/>-->
+					</cells>
+				</ColumnListItem>
+			</items>
+			<columns>
+				<Column width="12em">
+					<header>
+						<Text text="Product"/>
+					</header>
+				</Column>
+				<Column minScreenWidth="Tablet" demandPopin="true">
+					<header>
+						<Text text="Descriptionr"/>
+					</header>
+				</Column>
+				<!--<Column minScreenWidth="Tablet" demandPopin="true">-->
+				<!--	<header>-->
+				<!--		<Text text="Qtyr"/>-->
+				<!--	</header>-->
+				<!--</Column>-->
+			</columns>
+		</Table>
+		<beginButton>
+			<Button text="Show Items" press="handleClose"/>
+		</beginButton>
+		
+	</Dialog>
+</core:FragmentDefinition>

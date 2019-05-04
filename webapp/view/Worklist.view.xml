@@ -1,0 +1,149 @@
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:semantic="sap.m.semantic" xmlns:core="sap.ui.core"
+	xmlns:form="sap.ui.layout.form" controllerName="com.baba.ZDSD_CHANGESO1.controller.Worklist">
+	<semantic:FullscreenPage id="page" title="Change Loading Order" busy="{objectView>/busy}" showNavButton="false">
+		<semantic:content>
+			<form:SimpleForm layout="ResponsiveGridLayout" editable="true" labelSpanL="1" labelSpanM="2" columnsL="2" columnsM="2">
+				<!--<HBox>-->
+				<Label text="Route" required="true" />
+				<ComboBox id="oSelect1" items="{ path: '/CUSTOMERSet', sorter: { path: 'KUNNR' } }" width="auto" change="onClr">
+					<core:ListItem key="{KUNNR}" text="{KUNNR} - {NAME1}"/>
+				</ComboBox>
+				<!--</HBox>-->
+				<Label text="Date" required="true" />
+				<HBox>
+					<DatePicker id="DATE" width="auto" displayFormat="dd.MM.YYYY" valueFormat="dd.MM.YYYY" change="onClr" />
+					<Button xmlns="sap.m" text="Fetch" id="button0" press="onGet" width="auto"/>
+				</HBox>
+				<HBox>
+					<Label text="Ord :" />
+					<Input id="LOADORD" textAlign="Right" editable="false" />
+				</HBox>
+			</form:SimpleForm>
+			<!--<Panel expandable="true" expanded="false">-->
+			<!--	<HBox>-->
+			<!--		<SearchField id="NMATNR" placeholder="Add Material" enableSuggestions="true" search="onSearch1" suggest="onSuggest1"-->
+			<!--			suggestionItems="{ path: '/MATERIALSet', parameters: {operationMode: 'Client'}}" width="auto">-->
+			<!--			<suggestionItems>-->
+			<!--				<SuggestionItem text="{MATNR}" description="{MAKTX}" key="{MATNR}"/>-->
+			<!--			</suggestionItems>-->
+			<!--		</SearchField>-->
+			<!--		<Button xmlns="sap.m" text="Fetch" id="button2" press="onAdd" width="auto"/>-->
+			<!--	</HBox>-->
+			<!--</Panel>-->
+			<Table id="table" width="auto"
+				items="{ path: '/data', sorter: [ { path: 'VRKME', descending: false , group: true } ], operationMode: 'Client' }"
+				noDataText="No data fetched" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="false" growingScrollToLoad="false"
+				mode="MultiSelect" alternateRowColors="true" updateFinished="onUpdateFinished">
+				<!--updateFinished="onUpdateFinished"-->
+				<!--<headerToolbar>-->
+				<!--	<Toolbar>-->
+				<!--<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>-->
+				<!--		<ToolbarSpacer/>-->
+				<!--		<SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search="onSearchA" width="auto"/>-->
+				<!--	</Toolbar>-->
+				<!--</headerToolbar>-->
+				<columns>
+					<Column id="nameColumn0" vAlign="Middle" width="7%" >
+						<!--<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/>-->
+					</Column>
+					<Column id="nameColumn12" vAlign="Middle" width="5%" >
+						<!--<Text text="Ac.QTY" id="col5"/>-->
+					</Column>
+					<Column id="nameColumn1" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" visible="false" >
+						<!--<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/>-->
+					</Column>
+					<Column id="nameColumn2" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" >
+						<Text text="Mat" id="col1"/>
+					</Column>
+					<Column id="nameColumn3" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" >
+						<Text text="UOM" id="col2"/>
+					</Column>
+					<Column id="nameColumn4" vAlign="Top" >
+						<Text text="Pl.QTY" id="col3"/>
+					</Column>
+					<Column id="nameColumn5" vAlign="Top" >
+						<Text text="Ac.QTY" id="col4"/>
+					</Column>
+					<Column id="nameColumn6" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" visible="false" >
+						<!--<Text text="Ac.QTY" id="col5"/>-->
+					</Column>
+					<!--<Column id="nameColumn7" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" visible="false">-->
+					<!--<Text text="Ac.QTY:" id="col5"/>-->
+					<!--</Column>-->
+					<Column id="nameColumn7" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" visible="false" >
+						<!--<Text text="Ac.QTY" id="col5"/>-->
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells >
+							<ObjectStatus id="PSTYV" state="{ path: 'PSTYV' , formatter: '.formatter.colorval' }"
+								icon="{ path: 'PSTYV', formatter: '.formatter.colorval1' }" class="democlass_font"/>
+							<ObjectStatus id="ITEMCAT" state="{ path: 'ITEMCAT', formatter: '.formatter.colorval' }"
+								icon="{ path: 'ITEMCAT', formatter: '.formatter.colorval2' }" class="democlass_font"/>
+							<Text id="POSNR" text="{POSNR}" class="democlass_font"/>
+							<ObjectIdentifier text="{MATNR}-{MAKTX}" id="MATNR" class="democlass_font"/>
+							<Text id="VRKME" text="{VRKME}" class="democlass_font"/>
+							<Input id="BMENG" value="{BMENG}" editable="false" textAlign="Right" class="democlass_font"/>
+							<Input id="KWMENG" value="{KWMENG}" textAlign="Right" type="Number" change="onChk" class="democlass_font"/>
+							<Text id="EAN11" text="{EAN11}" class="democlass_font"/>
+							<Text id="NEW" class="democlass_font"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<Panel expandable="true" expanded="false" backgroundDesign="Solid" headerText="Search/Add by Material" visible="false">
+				<form:SimpleForm>
+					<!--<Label id="L4" width="100%" text="Add/New Material"></Label>-->
+					<!--<Input id="NMATNR" editable="true" width="auto"></Input>-->
+					<SearchField id="NMATNR" placeholder="Search for Material" enableSuggestions="true" search="onSearchA" suggest="onSuggestM"
+						suggestionItems="{ path: '/MATERIALINSet', sorter: { path: 'MAKTX' }, parameters: {operationMode: 'Client'}}" width="auto">
+						<suggestionItems>
+							<SuggestionItem text="{MATNR}" description="{MAKTX}" key="{MATNR}"/>
+						</suggestionItems>
+					</SearchField>
+					
+					<!--<ComboBox id="oSelect2" items="{ path: '/UOMSet', sorter: { path: 'KEY' } }" width="auto">-->
+					<!--	<core:Item text="{MEINS}"/>-->
+					<!--</ComboBox>-->
+					<HBox>
+						<RadioButton groupName="GroupA" text="BOX" selected="true" id="BOXR"/>
+						<RadioButton groupName="GroupA" text="PC" id="PCR"/>
+					</HBox>
+					<Button ariaLabelledBy="__xmlview0--label1" text="Add" width="80px" id="buttona" press="onAddM"/>
+				</form:SimpleForm>
+			</Panel>
+			<CheckBox selected="false" id="CONF" text="Final Confirmation"/>
+			<form:SimpleForm>
+				<HBox>
+					<Label text="Box:" design="Bold"/>
+					<Input id="BOX" editable="false" textAlign="Right"/>
+					<Label text=" PC:" design="Bold"/>
+					<Input id="PC" editable="false" textAlign="Right"/>
+				</HBox>
+			</form:SimpleForm>
+			<Label text="Tot Wt in KG:" design="Bold" width="50%"/>
+			<Input id="TOT" editable="false" textAlign="Right"/>
+			<Label text="Vehicle Wt in KG:" design="Bold" width="50%"/>
+			<Input id="VWT" editable="false" textAlign="Right"/>
+		</semantic:content>
+	
+		<semantic:customFooterContent>
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button17" press="onRest" icon="sap-icon://unlocked" />
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button4" press="onAdd" icon="sap-icon://add-product"/>
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button5" press="onDelnew" icon="sap-icon://less"/>
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button9" press="onRef" icon="sap-icon://refresh"/>
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button3" press="onPend" icon="sap-icon://activity-items"/>
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button1" press="onSave1" icon="sap-icon://save"/>
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button12" press="onAddS" icon="sap-icon://add-product" text="Add Material(by Description)"/>
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button13" press="onSearch0" icon="sap-icon://filter" text="Filter Zero Qty"/>
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button15" press="onSearchN" icon="sap-icon://filter" text="Filter New Item"/>
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button6" press="onPri" icon="sap-icon://print" text="Print"/>
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button7" press="onFetch" icon="sap-icon://create-form" text="Show Item"/>
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button10" press="onAll" icon="sap-icon://decrease-line-height" text="Show All items"/>
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button19" press="onAddDes" icon="sap-icon://detail-view"
+				text="Search Material(by Description)"/>
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button8" press="onSer" icon="sap-icon://search" text="Search by EAN"/>	
+		</semantic:customFooterContent>
+	</semantic:FullscreenPage>
+</mvc:View>
