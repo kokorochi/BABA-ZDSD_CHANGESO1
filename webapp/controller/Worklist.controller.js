@@ -1753,7 +1753,7 @@ sap.ui.define([
 				that.getView().byId("TOT").setValue();
 				that.getView().byId("NMATNR").setValue();
 				that.getView().byId("CONF").setSelected(false);
-				that.onRef();asda
+				that.onRef();
 				that.onblank(that);
 
 				if (kunnr === "" || date === "") {
