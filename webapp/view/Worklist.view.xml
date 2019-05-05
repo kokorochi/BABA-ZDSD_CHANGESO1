@@ -73,10 +73,16 @@
 					<Column id="nameColumn7" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" visible="false" >
 						<!--<Text text="Ac.QTY" id="col5"/>-->
 					</Column>
+					<Column id="nameColumn8" vAlign="Top" hAlign="Center" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" >
+						<Text text="Ver." id="col8" />
+					</Column>
+					<Column id="nameColumn9" vAlign="Top" hAlign="Center" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" >
+						<Text text="Ver.L" id="col9" />
+					</Column>
 				</columns>
 				<items>
-					<ColumnListItem>
-						<cells >
+					<ColumnListItem vAlign="Middle">
+						<cells>
 							<ObjectStatus id="PSTYV" state="{ path: 'PSTYV' , formatter: '.formatter.colorval' }"
 								icon="{ path: 'PSTYV', formatter: '.formatter.colorval1' }" class="democlass_font"/>
 							<ObjectStatus id="ITEMCAT" state="{ path: 'ITEMCAT', formatter: '.formatter.colorval' }"
@@ -88,6 +94,8 @@
 							<Input id="KWMENG" value="{KWMENG}" textAlign="Right" type="Number" change="onChk" class="democlass_font"/>
 							<Text id="EAN11" text="{EAN11}" class="democlass_font"/>
 							<Text id="NEW" class="democlass_font"/>
+							<Text id="ZZVERSION" text="1" class="democlass_font"/>
+							<Text id="ZZVERLOCK" text="N" class="democlass_font"/>
 						</cells>
 					</ColumnListItem>
 				</items>
@@ -113,7 +121,10 @@
 					<Button ariaLabelledBy="__xmlview0--label1" text="Add" width="80px" id="buttona" press="onAddM"/>
 				</form:SimpleForm>
 			</Panel>
-			<CheckBox selected="false" id="CONF" text="Final Confirmation"/>
+			<HBox>
+				<CheckBox selected="false" id="CONF" text="Final Confirmation"/>	
+				<CheckBox selected="false" id="VClose" text="Version Close"/>	
+			</HBox>
 			<form:SimpleForm>
 				<HBox>
 					<Label text="Box:" design="Bold"/>

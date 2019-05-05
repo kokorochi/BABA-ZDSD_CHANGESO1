@@ -1,0 +1,16 @@
+/* Enter your custom styles here */
+.democlass_red{
+	background-color: red !important;
+}
+
+.democlass_green{
+	background-color: green !important;
+}
+
+.democlass_yellow{
+	background-color: yellow !important;
+}
+
+.democlass_font{
+	font-size: 10px !important;
+}
