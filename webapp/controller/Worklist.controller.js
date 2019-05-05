@@ -61,6 +61,10 @@ sap.ui.define([
 				var oModelt = new JSONModel();
 				this.getView().byId("table").setModel(oModelt);
 				this.getView().byId("table").getModel().setSizeLimit('500');
+				
+				var oModelv = new JSONModel();
+				this.getView().byId("oSelect3").setModel(oModelv);
+				this.getView().byId("oSelect3").getModel().setSizeLimit('50'); 
 
 				// var oModelL = new JSONModel();
 				// this.getView().byId("oSelect1").setModel(oModelL);
@@ -1225,6 +1229,8 @@ sap.ui.define([
 
 				var vbeln = that.getView().byId("LOADORD").getValue();
 				var date = that.getView().byId("DATE").getValue();
+				
+				var zzversion = that.getView().byId("oSelect3").getSelectedKey();
 
 				var oModel1 = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZDSDO_CHANGESO_SRV/", true);
 				var itemData = oModel.getProperty("/data");
@@ -1254,6 +1260,12 @@ sap.ui.define([
 					path: "ITEMCAT",
 					operator: sap.ui.model.FilterOperator.EQ,
 					value1: val
+				}));
+				
+				PLFilters.push(new sap.ui.model.Filter({
+					path: "ZZVERSION",
+					operator: sap.ui.model.FilterOperator.EQ,
+					value1: zzversion
 				}));
 
 				oModel1.read("/UNCONFSet", {
@@ -1289,8 +1301,6 @@ sap.ui.define([
 									that.getView().byId("BOX").setValue(box);
 									that.getView().byId("PC").setValue(pc);
 									that.getView().byId("TOT").setValue(res[iRowIndex].NTGEW);
-									
-									that.getView().byId("HEADER_ZZVERSION").setValue(res[iRowIndex].ZZVERSION);
 								}
 
 								if (typeof itemData !== "undefined" && itemData.length > 0) {
@@ -1415,8 +1425,9 @@ sap.ui.define([
 								NTGEW: oModel2.getProperty("NTGEW", aContexts[i].getBindingContext()),
 								POSNR: oModel2.getProperty("POSNR", aContexts[i].getBindingContext()),
 								PSTYV: oModel2.getProperty("PSTYV", aContexts[i].getBindingContext()),
-								VRKME: oModel2.getProperty("VRKME", aContexts[i].getBindingContext())
-
+								VRKME: oModel2.getProperty("VRKME", aContexts[i].getBindingContext()),
+								ZZVERSION: oModel2.getProperty("ZZVERSION", aContexts[i].getBindingContext()),
+								ZZVERLOCK: oModel2.getProperty("ZZVERLOCK", aContexts[i].getBindingContext())
 							});
 						}
 
@@ -1795,6 +1806,7 @@ sap.ui.define([
 								that.getView().byId("LOADORD").setValue(ord);
 								that.getView().byId("VWT").setValue(res.VWT);
 								that.getView().byId("HEADER_ZZVERSION").setValue(res.ZZVERSION);
+								that.onVer();
 								sap.m.MessageToast.show("Loader Order fetched");
 							}
 
@@ -1813,6 +1825,60 @@ sap.ui.define([
 				}
 
 			},
+			
+			onVer: function (oEvent) {
+				var that = this;
+				var oModel = that.getView().byId("oSelect3").getModel();
+				
+				var data;
+				
+				oModel.setData({
+					modelData: data
+				});
+				oModel.refresh(true);
+				
+				var itemData = oModel.getProperty("/data");
+				var cver = that.getView().byId("HEADER_ZZVERSION").getValue();
+				if (cver === "" || cver === undefined) {
+					cver = 0;
+				}
+				cver = Number(cver);
+				var lv_cnt = 0;
+
+				for (var iRowIndex = 1; iRowIndex <= cver; iRowIndex++) {
+					lv_cnt = lv_cnt + 1;
+					var itemRow = {
+						VERN: lv_cnt
+					};
+
+					if (typeof itemData !== "undefined" && itemData.length > 0) {
+						itemData.push(itemRow);
+					} else {
+						itemData = [];
+						itemData.push(itemRow);
+					}
+
+					// // Set Model
+					oModel.setData({
+						data: itemData
+					});
+					
+				}
+				itemRow = {};
+				itemData.push(itemRow);
+				// // Set Model
+					oModel.setData({
+						data: itemData
+					});
+				oModel.refresh(true);
+
+				if (cver > 0) {
+					that.getView().byId("oSelect3").setSelectedKey(cver);
+				}
+			}, 
+ 
+
+			
 			onSer: function () {
 				var that = this;
 				var oView = that.getView();
@@ -1928,11 +1994,9 @@ sap.ui.define([
 									that.getView().byId("TOT").setValue(val5);
 									that.getView().byId("HEADER_ZZVERSION").setValue(val6);
 
-									if (l_mark1 === "X" || l_mark2 === "Y") {
+									if (l_mark1 === "X") {
 										that.onblank(that);
-										if (l_mark1 === "X"){
-											that.onPri();
-										}
+										that.onPri();
 										that.getView().byId("CONF").setSelected(false);
 										that.getView().byId("VLOCK").setSelected(false);
 										that.getView().byId("LOADORD").setValue();
@@ -2032,10 +2096,8 @@ sap.ui.define([
 											// }
 											that.onDelnew(that);
 
-											if (l_mark1 === "X" || l_mark2 === "Y") {
-												if (l_mark1 === "X"){
-													that.onPri();
-												}
+											if (l_mark1 === "X") {
+												that.onPri();
 												that.getView().byId("CONF").setSelected(false);
 												that.getView().byId("LOADORD").setValue();
 												that.getView().byId("BOX").setValue();

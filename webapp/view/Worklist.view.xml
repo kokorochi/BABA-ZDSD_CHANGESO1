@@ -13,14 +13,18 @@
 				<HBox>
 					<DatePicker id="DATE" width="auto" displayFormat="dd.MM.YYYY" valueFormat="dd.MM.YYYY" change="onClr" />
 					<Button xmlns="sap.m" text="Fetch" id="button0" press="onGet" width="auto"/>
-				</HBox>
+				</HBox>	
 				<HBox>
 					<Label text="Ord :" />
 					<Input id="LOADORD" textAlign="Right" editable="false" />
-					
-					<Label text="Latest Ver. :" />
-					<Input id="HEADER_ZZVERSION" textAlign="Center" editable="false" width="20%" />
+					<Input id="HEADER_ZZVERSION" textAlign="Right" editable="false" />
 				</HBox>
+				<HBox>
+					<Label text="VER Choose" required="true"/>
+					<ComboBox id="oSelect3" items="{ path: '/data'}" width="40%">
+						<core:ListItem key="{VERN}" text="{VERN}"/>
+					</ComboBox>
+				</HBox> 
 			</form:SimpleForm>
 			<!--<Panel expandable="true" expanded="false">-->
 			<!--	<HBox>-->

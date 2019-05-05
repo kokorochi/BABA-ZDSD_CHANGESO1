@@ -89,19 +89,20 @@
 					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><NavigationProperty Name="HEADITEMNAV" Relationship="ZDSDO_CHANGESO_SRV.HEADITEMASS" FromRole="FromRole_HEADITEMASS"
 					ToRole="ToRole_HEADITEMASS"/></EntityType>
 			<EntityType Name="ITEM" sap:content-version="1">
-				<Key><PropertyRef Name="VBELN"/></Key><Property Name="QTY_BOX" Type="Edm.Decimal" Nullable="false" Precision="17" Scale="3" sap:unicode="false" sap:label="Quantity in Box"
-					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="NTGEW" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:unit="GEWEI"
+				<Key><PropertyRef Name="VBELN"/></Key><Property Name="NTGEW" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:unit="GEWEI"
 					sap:label="Net weight" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="POSNR" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Item" sap:creatable="false"
-					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="QTY_PC" Type="Edm.Decimal" Nullable="false" Precision="17" Scale="3" sap:unicode="false" sap:label="Quantity in PC"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="QTY_BOX" Type="Edm.Decimal" Nullable="false" Precision="17" Scale="3" sap:unicode="false" sap:label="Quantity in Box"
 					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="GEWEI" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Weight unit" sap:creatable="false"
 					sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/><Property Name="MATNR" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material" sap:creatable="false"
-					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="CTR_BOX" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Int2" sap:creatable="false" sap:updatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="QTY_PC" Type="Edm.Decimal" Nullable="false" Precision="17" Scale="3" sap:unicode="false" sap:label="Quantity in PC"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="CTR_BOX" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Int2" sap:creatable="false" sap:updatable="false"
 					sap:sortable="false" sap:filterable="false"/><Property Name="VRKME" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Sales unit" sap:creatable="false"
 					sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/><Property Name="CTR_PC" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Int2" sap:creatable="false" sap:updatable="false"
 					sap:sortable="false" sap:filterable="false"/><Property Name="KWMENG" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="3" sap:unicode="false" sap:unit="VRKME"
 					sap:label="Order quantity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="PSTYV" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Item category" sap:creatable="false"
 					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="VBELN" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Sales Document"
-					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="ZZVERSION" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Reserve" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
 			<Association Name="HEADITEMASS" sap:content-version="1"><End Type="ZDSDO_CHANGESO_SRV.HEADER" Multiplicity="1" Role="FromRole_HEADITEMASS"/><End Type="ZDSDO_CHANGESO_SRV.ITEM" Multiplicity="*" Role="ToRole_HEADITEMASS"/>
 				<ReferentialConstraint>
 					<Principal Role="FromRole_HEADITEMASS"><PropertyRef Name="VBELN"/></Principal>
