@@ -21,7 +21,7 @@
 				</HBox>
 				<HBox>
 					<Label text="VER Choose" required="true"/>
-					<ComboBox id="oSelect3" items="{ path: '/data'}" width="40%">
+					<ComboBox id="oSelect3" items="{ path: '/data'}" width="40%" >
 						<core:ListItem key="{VERN}" text="{VERN}"/>
 					</ComboBox>
 				</HBox> 

@@ -61,10 +61,10 @@ sap.ui.define([
 				var oModelt = new JSONModel();
 				this.getView().byId("table").setModel(oModelt);
 				this.getView().byId("table").getModel().setSizeLimit('500');
-				
+
 				var oModelv = new JSONModel();
 				this.getView().byId("oSelect3").setModel(oModelv);
-				this.getView().byId("oSelect3").getModel().setSizeLimit('50'); 
+				this.getView().byId("oSelect3").getModel().setSizeLimit('50');
 
 				// var oModelL = new JSONModel();
 				// this.getView().byId("oSelect1").setModel(oModelL);
@@ -340,6 +340,17 @@ sap.ui.define([
 				that.getView().byId("TOT").setValue();
 				that.getView().byId("HEADER_ZZVERSION").setValue();
 				that.onblank(that);
+
+				var oModel = that.getView().byId("oSelect3").getModel();
+				var data;
+				oModel.setData({
+					modelData: data
+				});
+				oModel.refresh(true);
+				that.getView().byId("oSelect3").setSelectedKey();
+
+				// var itemData = oModel.getProperty("/data");
+				// itemData.push();
 			},
 
 			onSearch1: function (event) {
@@ -1031,7 +1042,7 @@ sap.ui.define([
 									that.getView().byId("BOX").setValue(box);
 									that.getView().byId("PC").setValue(pc);
 									that.getView().byId("TOT").setValue(res[iRowIndex].NTGEW);
-									
+
 									that.getView().byId("HEADER_ZZVERSION").setValue(res[iRowIndex].ZZVERSION);
 								}
 
@@ -1229,7 +1240,7 @@ sap.ui.define([
 
 				var vbeln = that.getView().byId("LOADORD").getValue();
 				var date = that.getView().byId("DATE").getValue();
-				
+
 				var zzversion = that.getView().byId("oSelect3").getSelectedKey();
 
 				var oModel1 = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZDSDO_CHANGESO_SRV/", true);
@@ -1261,7 +1272,7 @@ sap.ui.define([
 					operator: sap.ui.model.FilterOperator.EQ,
 					value1: val
 				}));
-				
+
 				PLFilters.push(new sap.ui.model.Filter({
 					path: "ZZVERSION",
 					operator: sap.ui.model.FilterOperator.EQ,
@@ -1537,7 +1548,7 @@ sap.ui.define([
 												that.getView().byId("BOX").setValue(box);
 												that.getView().byId("PC").setValue(pc);
 												that.getView().byId("TOT").setValue(res[iRowIndex].NTGEW);
-												
+
 												that.getView().byId("HEADER_ZZVERSION").setValue(res[iRowIndex].ZZVERSION);
 											}
 
@@ -1825,18 +1836,18 @@ sap.ui.define([
 				}
 
 			},
-			
+
 			onVer: function (oEvent) {
 				var that = this;
 				var oModel = that.getView().byId("oSelect3").getModel();
-				
+
 				var data;
-				
+
 				oModel.setData({
 					modelData: data
 				});
 				oModel.refresh(true);
-				
+
 				var itemData = oModel.getProperty("/data");
 				var cver = that.getView().byId("HEADER_ZZVERSION").getValue();
 				if (cver === "" || cver === undefined) {
@@ -1862,23 +1873,21 @@ sap.ui.define([
 					oModel.setData({
 						data: itemData
 					});
-					
+
 				}
 				itemRow = {};
 				itemData.push(itemRow);
 				// // Set Model
-					oModel.setData({
-						data: itemData
-					});
+				oModel.setData({
+					data: itemData
+				});
 				oModel.refresh(true);
 
 				if (cver > 0) {
 					that.getView().byId("oSelect3").setSelectedKey(cver);
 				}
-			}, 
- 
+			},
 
-			
 			onSer: function () {
 				var that = this;
 				var oView = that.getView();
@@ -1993,18 +2002,19 @@ sap.ui.define([
 									that.getView().byId("PC").setValue(pc);
 									that.getView().byId("TOT").setValue(val5);
 									that.getView().byId("HEADER_ZZVERSION").setValue(val6);
+									that.onVer();
 
 									if (l_mark1 === "X") {
 										that.onblank(that);
 										that.onPri();
 										that.getView().byId("CONF").setSelected(false);
-										that.getView().byId("VLOCK").setSelected(false);
 										that.getView().byId("LOADORD").setValue();
 										that.getView().byId("BOX").setValue();
 										that.getView().byId("PC").setValue();
 										that.getView().byId("TOT").setValue();
 										that.getView().byId("VWT").setValue();
 										that.getView().byId("HEADER_ZZVERSION").setValue();
+										that.onClr();
 									}
 
 									sap.m.MessageToast.show(oData.MSG);
@@ -2095,6 +2105,7 @@ sap.ui.define([
 											// 	//new Filter("MATNR", FilterOperator.Contains, sQuery.toUpperCase())
 											// }
 											that.onDelnew(that);
+											that.onVer();
 
 											if (l_mark1 === "X") {
 												that.onPri();
@@ -2105,7 +2116,7 @@ sap.ui.define([
 												that.getView().byId("TOT").setValue();
 												that.getView().byId("VWT").setValue();
 												that.getView().byId("HEADER_ZZVERSION").setValue();
-
+												that.onClr();
 											}
 											sap.m.MessageToast.show(oData.MSG);
 											that.onBusyE(oBusy);
