@@ -1009,7 +1009,9 @@ sap.ui.define([
 									BMENG: res[iRowIndex].BMENG,
 									PSTYV: res[iRowIndex].PSTYV,
 									NTGEW: res[iRowIndex].NTGEW,
-									ITEMCAT: res[iRowIndex].ITEMCAT
+									ITEMCAT: res[iRowIndex].ITEMCAT,
+									ZZVERSION: res[iRowIndex].ZZVERSION,
+									ZZVERLOCK: res[iRowIndex].ZZVERLOCK
 								};
 								if (iRowIndex === 0) {
 									var tbox = that.onConv(res[iRowIndex].QTY_BOX);
@@ -1267,7 +1269,9 @@ sap.ui.define([
 									BMENG: res[iRowIndex].BMENG,
 									PSTYV: res[iRowIndex].PSTYV,
 									NTGEW: res[iRowIndex].NTGEW,
-									ITEMCAT: res[iRowIndex].ITEMCAT
+									ITEMCAT: res[iRowIndex].ITEMCAT,
+									ZZVERSION: res[iRowIndex].ZZVERSION,
+									ZZVERLOCK: res[iRowIndex].ZZVERLOCK
 								};
 								if (iRowIndex === 0) {
 									var tbox = that.onConv(res[iRowIndex].QTY_BOX);

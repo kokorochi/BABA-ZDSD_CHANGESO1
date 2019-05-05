@@ -94,8 +94,8 @@
 							<Input id="KWMENG" value="{KWMENG}" textAlign="Right" type="Number" change="onChk" class="democlass_font"/>
 							<Text id="EAN11" text="{EAN11}" class="democlass_font"/>
 							<Text id="NEW" class="democlass_font"/>
-							<Text id="ZZVERSION" text="1" class="democlass_font"/>
-							<Text id="ZZVERLOCK" text="N" class="democlass_font"/>
+							<Text id="ZZVERSION" text="{ZZVERSION}" class="democlass_font"/>
+							<Text id="ZZVERLOCK" text="{ZZVERLOCK}" class="democlass_font"/>
 						</cells>
 					</ColumnListItem>
 				</items>

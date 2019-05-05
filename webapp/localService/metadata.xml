@@ -46,7 +46,9 @@
 					sap:sortable="false"/><Property Name="TYPE" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Single-Character Flag"
 					sap:sortable="false"/><Property Name="CTR_BOX" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Int2" sap:creatable="false" sap:updatable="false"
 					sap:sortable="false" sap:filterable="false"/><Property Name="CTR_PC" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Int2" sap:creatable="false" sap:updatable="false"
-					sap:sortable="false" sap:filterable="false"/></EntityType>
+					sap:sortable="false" sap:filterable="false"/><Property Name="ZZVERSION" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Number" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false"/><Property Name="ZZVERLOCK" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Single-Character Flag"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false"/></EntityType>
 			<EntityType Name="FETCH" sap:content-version="1">
 				<Key><PropertyRef Name="EAN11"/><PropertyRef Name="TYPE"/><PropertyRef Name="VBELN"/><PropertyRef Name="VDATU"/></Key><Property Name="ITEMCAT" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Item category"
 					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="NTGEW" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:unit="GEWEI"
@@ -73,6 +75,10 @@
 				<Key><PropertyRef Name="MATNR"/></Key><Property Name="MATNR" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material" sap:creatable="false"
 					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="MAKTX" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Description" sap:creatable="false"
 					sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+			<EntityType Name="MATERIALINMUL" sap:content-version="1">
+				<Key><PropertyRef Name="MATNR"/><PropertyRef Name="MAKTX"/></Key><Property Name="MATNR" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material" sap:sortable="false"/><Property Name="MAKTX" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><Property Name="QTY" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/></EntityType>
 			<EntityType Name="HEADER" sap:content-version="1">
 				<Key><PropertyRef Name="VBELN"/></Key><Property Name="VBELN" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Delivery" sap:sortable="false"/><Property Name="CONF" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Single-Character Flag"
 					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="VDATU" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Character Field Length = 10"
@@ -94,10 +100,6 @@
 					sap:label="Order quantity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="PSTYV" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Item category" sap:creatable="false"
 					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="VBELN" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Sales Document"
 					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
-			<EntityType Name="MATERIALINMUL" sap:content-version="1">
-				<Key><PropertyRef Name="MATNR"/><PropertyRef Name="MAKTX"/></Key><Property Name="MATNR" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material" sap:sortable="false"/><Property Name="MAKTX" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:creatable="false" sap:updatable="false"
-					sap:sortable="false" sap:filterable="false"/><Property Name="QTY" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:creatable="false" sap:updatable="false"
-					sap:sortable="false" sap:filterable="false"/></EntityType>
 			<Association Name="HEADITEMASS" sap:content-version="1"><End Type="ZDSDO_CHANGESO_SRV.HEADER" Multiplicity="1" Role="FromRole_HEADITEMASS"/><End Type="ZDSDO_CHANGESO_SRV.ITEM" Multiplicity="*" Role="ToRole_HEADITEMASS"/>
 				<ReferentialConstraint>
 					<Principal Role="FromRole_HEADITEMASS"><PropertyRef Name="VBELN"/></Principal>
@@ -105,8 +107,8 @@
 				</ReferentialConstraint>
 			</Association>
 			<EntityContainer Name="ZDSDO_CHANGESO_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx"><EntitySet Name="CUSTOMERSet" EntityType="ZDSDO_CHANGESO_SRV.CUSTOMER" sap:searchable="true" sap:content-version="1"/><EntitySet Name="LOADORDSet" EntityType="ZDSDO_CHANGESO_SRV.LOADORD" sap:searchable="true" sap:content-version="1"/><EntitySet Name="MATERIALSet" EntityType="ZDSDO_CHANGESO_SRV.MATERIAL" sap:searchable="true" sap:content-version="1"/><EntitySet Name="UOMSet" EntityType="ZDSDO_CHANGESO_SRV.UOM" sap:searchable="true" sap:content-version="1"/><EntitySet Name="UNCONFSet" EntityType="ZDSDO_CHANGESO_SRV.UNCONF" sap:searchable="true" sap:content-version="1"/><EntitySet Name="FETCHSet" EntityType="ZDSDO_CHANGESO_SRV.FETCH" sap:searchable="true" sap:content-version="1"/><EntitySet Name="PRINTSet" EntityType="ZDSDO_CHANGESO_SRV.PRINT" sap:searchable="true" sap:content-version="1"/><EntitySet Name="MATERIALINSet" EntityType="ZDSDO_CHANGESO_SRV.MATERIALIN" sap:creatable="false" sap:updatable="false" sap:deletable="false"
-				sap:pageable="false" sap:content-version="1"/><EntitySet Name="HEADERSet" EntityType="ZDSDO_CHANGESO_SRV.HEADER" sap:searchable="true" sap:content-version="1"/><EntitySet Name="ITEMSet" EntityType="ZDSDO_CHANGESO_SRV.ITEM" sap:searchable="true" sap:content-version="1"/><EntitySet Name="MATERIALINMULSet" EntityType="ZDSDO_CHANGESO_SRV.MATERIALINMUL" sap:creatable="false" sap:updatable="false"
-				sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+				sap:pageable="false" sap:content-version="1"/><EntitySet Name="MATERIALINMULSet" EntityType="ZDSDO_CHANGESO_SRV.MATERIALINMUL" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/><EntitySet Name="HEADERSet" EntityType="ZDSDO_CHANGESO_SRV.HEADER" sap:searchable="true" sap:content-version="1"/><EntitySet Name="ITEMSet" EntityType="ZDSDO_CHANGESO_SRV.ITEM" sap:searchable="true" sap:content-version="1"/>
 				<AssociationSet Name="HEADITEMASSSet" Association="ZDSDO_CHANGESO_SRV.HEADITEMASS" sap:creatable="false" sap:updatable="false"
 					sap:deletable="false" sap:content-version="1"><End EntitySet="HEADERSet" Role="FromRole_HEADITEMASS"/><End EntitySet="ITEMSet" Role="ToRole_HEADITEMASS"/></AssociationSet>
 			</EntityContainer><atom:link rel="self" href="http://172.17.80.40:8000/sap/opu/odata/sap/ZDSDO_CHANGESO_SRV/$metadata"
