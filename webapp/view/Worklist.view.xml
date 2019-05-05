@@ -123,7 +123,7 @@
 			</Panel>
 			<HBox>
 				<CheckBox selected="false" id="CONF" text="Final Confirmation"/>	
-				<CheckBox selected="false" id="VClose" text="Version Close"/>	
+				<CheckBox selected="false" id="VLOCK" text="Version Close"/>	
 			</HBox>
 			<form:SimpleForm>
 				<HBox>

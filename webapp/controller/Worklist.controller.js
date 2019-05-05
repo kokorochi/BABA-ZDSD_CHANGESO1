@@ -1864,6 +1864,14 @@ sap.ui.define([
 					} else {
 						l_mark1 = "";
 					}
+					
+					// Get version close checkbox value
+					var val_vlock = that.getView().byId("VLOCK").getSelected();
+					if (val_vlock === true) {
+						var l_mark2 = "Y";
+					} else {
+						l_mark2 = "";
+					}
 
 					that.onBusyS(oBusy);
 
@@ -1873,7 +1881,7 @@ sap.ui.define([
 					var aItems = oTable.getItems(); //All rows  
 					var aContexts = oTable.getSelectedContexts(); //selected rows marked with checkbox from table
 
-					if (l_mark1 === "" && aContexts.length === 0) {
+					if (l_mark1 === "" && l_mark2 === "" && aContexts.length === 0) {
 						sap.m.MessageToast.show("No Items marked for posting");
 						that.onBusyE(oBusy);
 					} else {
@@ -1883,8 +1891,9 @@ sap.ui.define([
 						oEntry1.CONF = l_mark1;
 						oEntry1.VDATU = date;
 						oEntry1.VWT = vwt;
+						oEntry1.VLOCK = l_mark2;
 
-						if (l_mark1 === "X" && aItems.length === 0) {
+						if ((l_mark1 === "X" || l_mark2 === "Y") && aItems.length === 0) {
 							oEntry1.HEADITEMNAV = [];
 
 							oModel2.create("/HEADERSet", oEntry1, {
@@ -1903,7 +1912,7 @@ sap.ui.define([
 									that.getView().byId("PC").setValue(pc);
 									that.getView().byId("TOT").setValue(val5);
 
-									if (l_mark1 === "X") {
+									if (l_mark1 === "X" || l_mark2 === "Y") {
 										that.onblank(that);
 										that.onPri();
 										that.getView().byId("CONF").setSelected(false);
@@ -1928,7 +1937,7 @@ sap.ui.define([
 							var flg = "",
 								cnt = 0;
 
-							if (l_mark1 === "X" && aItems.length > 0) {
+							if ((l_mark1 === "X" || l_mark2 ==="Y") && aItems.length > 0) {
 								var oModel = that.getView().byId("table").getModel();
 								for (var i = 0; i < aItems.length; i++) {
 									var l_matnr = oModel.getProperty("MATNR", aItems[i].getBindingContext());
@@ -1938,7 +1947,7 @@ sap.ui.define([
 								}
 								var l_cnt = Number(cnt);
 								if (aContexts.length !== l_cnt) {
-									sap.m.MessageToast.show("For Final Confirmation, mark all Items");
+									sap.m.MessageToast.show("For Final Confirmation/Version Close, mark all Items");
 									flg = "X";
 									that.onBusyE(oBusy);
 								}
@@ -2000,7 +2009,7 @@ sap.ui.define([
 											// }
 											that.onDelnew(that);
 
-											if (l_mark1 === "X") {
+											if (l_mark1 === "X" || l_mark2 === "Y") {
 												that.onPri();
 												that.getView().byId("CONF").setSelected(false);
 												that.getView().byId("LOADORD").setValue();
