@@ -149,7 +149,9 @@ sap.ui.define([
 
 					for (var iRowIndex = 0; iRowIndex < aItems.length; iRowIndex++) {
 						if (aItems[iRowIndex]._bGroupHeader === false) {
-							aItems[iRowIndex].getCells()[6].setEditable(true);
+							if (aItems[iRowIndex].getCells()[10].getText() === "") {
+								aItems[iRowIndex].getCells()[6].setEditable(true);
+							}
 							// aItems[iRowIndex].getCells()[0].setIcon();
 							// aItems[iRowIndex].getCells()[0].setText();
 
@@ -325,12 +327,14 @@ sap.ui.define([
 			onClr: function (oEvent) {
 				var that = this;
 				that.getView().byId("CONF").setSelected(false);
+				that.getView().byId("VLOCK").setSelected(false);
 				that.getView().byId("NMATNR").setValue();
 				that.getView().byId("LOADORD").setValue();
 				that.getView().byId("VWT").setValue();
 				that.getView().byId("BOX").setValue();
 				that.getView().byId("PC").setValue();
 				that.getView().byId("TOT").setValue();
+				that.getView().byId("HEADER_ZZVERSION").setValue();
 				that.onblank(that);
 			},
 
@@ -1023,6 +1027,8 @@ sap.ui.define([
 									that.getView().byId("BOX").setValue(box);
 									that.getView().byId("PC").setValue(pc);
 									that.getView().byId("TOT").setValue(res[iRowIndex].NTGEW);
+									
+									that.getView().byId("HEADER_ZZVERSION").setValue(res[iRowIndex].ZZVERSION);
 								}
 
 								if (typeof itemData !== "undefined" && itemData.length > 0) {
@@ -1283,6 +1289,8 @@ sap.ui.define([
 									that.getView().byId("BOX").setValue(box);
 									that.getView().byId("PC").setValue(pc);
 									that.getView().byId("TOT").setValue(res[iRowIndex].NTGEW);
+									
+									that.getView().byId("HEADER_ZZVERSION").setValue(res[iRowIndex].ZZVERSION);
 								}
 
 								if (typeof itemData !== "undefined" && itemData.length > 0) {
@@ -1518,6 +1526,8 @@ sap.ui.define([
 												that.getView().byId("BOX").setValue(box);
 												that.getView().byId("PC").setValue(pc);
 												that.getView().byId("TOT").setValue(res[iRowIndex].NTGEW);
+												
+												that.getView().byId("HEADER_ZZVERSION").setValue(res[iRowIndex].ZZVERSION);
 											}
 
 											if (typeof itemData !== "undefined" && itemData.length > 0) {
@@ -1757,6 +1767,8 @@ sap.ui.define([
 				that.getView().byId("TOT").setValue();
 				that.getView().byId("NMATNR").setValue();
 				that.getView().byId("CONF").setSelected(false);
+				that.getView().byId("VLOCK").setSelected(false);
+				that.getView().byId("HEADER_ZZVERSION").setValue();
 				that.onRef();
 				that.onblank(that);
 
@@ -1782,6 +1794,7 @@ sap.ui.define([
 								that.getView().byId("TOT").setValue(res.NTGEW);
 								that.getView().byId("LOADORD").setValue(ord);
 								that.getView().byId("VWT").setValue(res.VWT);
+								that.getView().byId("HEADER_ZZVERSION").setValue(res.ZZVERSION);
 								sap.m.MessageToast.show("Loader Order fetched");
 							}
 
@@ -1864,7 +1877,7 @@ sap.ui.define([
 					} else {
 						l_mark1 = "";
 					}
-					
+
 					// Get version close checkbox value
 					var val_vlock = that.getView().byId("VLOCK").getSelected();
 					if (val_vlock === true) {
@@ -1905,22 +1918,29 @@ sap.ui.define([
 									var val4 = oData.HEADITEMNAV.results[0].CTR_PC;
 									var val5 = oData.HEADITEMNAV.results[0].NTGEW;
 
+									var val6 = oData.HEADITEMNAV.results[0].ZZVERSION;
+
 									var box = val1 + "/" + val3;
 									var pc = val2 + "/" + val4;
 
 									that.getView().byId("BOX").setValue(box);
 									that.getView().byId("PC").setValue(pc);
 									that.getView().byId("TOT").setValue(val5);
+									that.getView().byId("HEADER_ZZVERSION").setValue(val6);
 
 									if (l_mark1 === "X" || l_mark2 === "Y") {
 										that.onblank(that);
-										that.onPri();
+										if (l_mark1 === "X"){
+											that.onPri();
+										}
 										that.getView().byId("CONF").setSelected(false);
+										that.getView().byId("VLOCK").setSelected(false);
 										that.getView().byId("LOADORD").setValue();
 										that.getView().byId("BOX").setValue();
 										that.getView().byId("PC").setValue();
 										that.getView().byId("TOT").setValue();
 										that.getView().byId("VWT").setValue();
+										that.getView().byId("HEADER_ZZVERSION").setValue();
 									}
 
 									sap.m.MessageToast.show(oData.MSG);
@@ -1937,7 +1957,7 @@ sap.ui.define([
 							var flg = "",
 								cnt = 0;
 
-							if ((l_mark1 === "X" || l_mark2 ==="Y") && aItems.length > 0) {
+							if ((l_mark1 === "X" || l_mark2 === "Y") && aItems.length > 0) {
 								var oModel = that.getView().byId("table").getModel();
 								for (var i = 0; i < aItems.length; i++) {
 									var l_matnr = oModel.getProperty("MATNR", aItems[i].getBindingContext());
@@ -1992,12 +2012,15 @@ sap.ui.define([
 											var val4 = oData.HEADITEMNAV.results[0].CTR_PC;
 											var val5 = oData.HEADITEMNAV.results[0].NTGEW;
 
+											var val6 = oData.HEADITEMNAV.results[0].ZZVERSION;
+
 											var box = val1 + "/" + val3;
 											var pc = val2 + "/" + val4;
 
 											that.getView().byId("BOX").setValue(box);
 											that.getView().byId("PC").setValue(pc);
 											that.getView().byId("TOT").setValue(val5);
+											that.getView().byId("HEADER_ZZVERSION").setValue(val6);
 
 											// that.onDel(that);
 
@@ -2010,13 +2033,16 @@ sap.ui.define([
 											that.onDelnew(that);
 
 											if (l_mark1 === "X" || l_mark2 === "Y") {
-												that.onPri();
+												if (l_mark1 === "X"){
+													that.onPri();
+												}
 												that.getView().byId("CONF").setSelected(false);
 												that.getView().byId("LOADORD").setValue();
 												that.getView().byId("BOX").setValue();
 												that.getView().byId("PC").setValue();
 												that.getView().byId("TOT").setValue();
 												that.getView().byId("VWT").setValue();
+												that.getView().byId("HEADER_ZZVERSION").setValue();
 
 											}
 											sap.m.MessageToast.show(oData.MSG);

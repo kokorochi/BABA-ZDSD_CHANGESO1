@@ -17,6 +17,9 @@
 				<HBox>
 					<Label text="Ord :" />
 					<Input id="LOADORD" textAlign="Right" editable="false" />
+					
+					<Label text="Latest Ver. :" />
+					<Input id="HEADER_ZZVERSION" textAlign="Center" editable="false" width="20%" />
 				</HBox>
 			</form:SimpleForm>
 			<!--<Panel expandable="true" expanded="false">-->
