@@ -136,7 +136,8 @@ sap.ui.define([
 							// var l_matnr = oModel.getProperty("MATNR", aItems[iRowIndex].getBindingContext());
 							// if (l_matnr !== "" && l_matnr !== undefined && l_matnr !=== null ) {
 							var l_comp = oModel.getProperty("PSTYV", aItems[iRowIndex].getBindingContext());
-							if (l_comp === "X") {
+							var l_foc = oModel.getProperty("ITEMCAT", aItems[iRowIndex].getBindingContext());
+							if (l_comp === "X" || l_foc === "Y") {
 								aItems[iRowIndex].getCells()[6].setEditable(false);
 							}
 						}
@@ -148,6 +149,7 @@ sap.ui.define([
 			onRest: function () {
 				var oTable = this.getView().byId("table");
 				var aItems = oTable.getSelectedItems(); //All rows  ; //All rows  
+				// var oModel = aItems.getModel();
 
 				if (aItems.length > 0) {
 
@@ -156,6 +158,13 @@ sap.ui.define([
 							if (aItems[iRowIndex].getCells()[10].getText() === "") {
 								aItems[iRowIndex].getCells()[6].setEditable(true);
 							}
+							if (aItems[iRowIndex].getCells()[1].getIcon() === "sap-icon://ppt-attachment") {
+								aItems[iRowIndex].getCells()[6].setEditable(false);
+							}
+							// if (oModel.getProperty("ITEMCAT", aItems[iRowIndex].getBindingContext()) === "Y") {
+							// 	aItems[iRowIndex].getCells()[6].setEditable(false);
+							// }
+
 							// aItems[iRowIndex].getCells()[0].setIcon();
 							// aItems[iRowIndex].getCells()[0].setText();
 
@@ -427,6 +436,7 @@ sap.ui.define([
 						oView.addDependent(oDialog);
 					}
 					oDialog.setTitle("Add Material");
+					// that.byId("MDialog").destroy();
 					oDialog.open(that);
 				}
 
@@ -792,7 +802,7 @@ sap.ui.define([
 				oDialog.open(that);
 			},
 
-			onPri: function (oEvent) {
+			onPri: function (oEvent, final) {
 				var ord = this.getView().byId("LOADORD")._lastValue;
 				var kunnr = this.getView().byId("oSelect1").getSelectedKey();
 				var date = this.getView().byId("DATE")._lastValue;
@@ -809,9 +819,14 @@ sap.ui.define([
 					sap.m.MessageToast.show("No Date selected");
 					flg = "X";
 				}
+				if (final !== "X") {
+					var ver = this.getView().byId("oSelect3").getSelectedKey();
+				} else {
+					ver = "";
+				}
 				if (flg === "") {
 					var url = "/sap/opu/odata/sap/ZDSDO_CHANGESO_SRV/PRINTSet(VBELN='" + ord + "',KUNNR='" + kunnr + "',DATE='" +
-						date + "')/$value";
+						date + "',VER='" + ver + "')/$value";
 					sap.m.URLHelper.redirect(url, true);
 					// new sap.m.Link(url, true);
 				}
@@ -979,6 +994,8 @@ sap.ui.define([
 				var date = that.getView().byId("DATE").getValue();
 				var oModel = that.getView().byId("table").getModel();
 
+				var zzversion = that.getView().byId("oSelect3").getSelectedKey();
+
 				var oModel1 = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZDSDO_CHANGESO_SRV/", true);
 				var itemData = oModel.getProperty("/data");
 				var oBusy = new sap.m.BusyDialog();
@@ -1007,6 +1024,12 @@ sap.ui.define([
 					path: "ITEMCAT",
 					operator: sap.ui.model.FilterOperator.EQ,
 					value1: val
+				}));
+
+				PLFilters.push(new sap.ui.model.Filter({
+					path: "ZZVERSION",
+					operator: sap.ui.model.FilterOperator.EQ,
+					value1: zzversion
 				}));
 
 				oModel1.read("/UNCONFSet", {
@@ -1042,8 +1065,6 @@ sap.ui.define([
 									that.getView().byId("BOX").setValue(box);
 									that.getView().byId("PC").setValue(pc);
 									that.getView().byId("TOT").setValue(res[iRowIndex].NTGEW);
-
-									that.getView().byId("HEADER_ZZVERSION").setValue(res[iRowIndex].ZZVERSION);
 								}
 
 								if (typeof itemData !== "undefined" && itemData.length > 0) {
@@ -1875,16 +1896,27 @@ sap.ui.define([
 					});
 
 				}
-				itemRow = {};
-				itemData.push(itemRow);
-				// // Set Model
-				oModel.setData({
-					data: itemData
-				});
+
+				var itemRow1 = {};
+				if (typeof itemData !== "undefined" && itemData.length > 0) {
+					itemData.push(itemRow1);
+				} else {
+					itemData = [];
+					itemData.push(itemRow1);
+				}
+
+				// itemRow = {};
+				// itemData.push(itemRow);
+				// // // Set Model
+				// oModel.setData({
+				// 	data: itemData
+				// });
 				oModel.refresh(true);
 
 				if (cver > 0) {
 					that.getView().byId("oSelect3").setSelectedKey(cver);
+				} else {
+					that.getView().byId("oSelect3").setSelectedKey(false);
 				}
 			},
 
@@ -1918,9 +1950,16 @@ sap.ui.define([
 			onSave1: function (oEvent) {
 				var that = this;
 				var fconf = that.getView().byId("CONF").getSelected();
-				if (fconf === true) {
+				var vlock = that.getView().byId("VLOCK").getSelected();
+				if (fconf === true || vlock === true) {
+					if (fconf === true) {
+						var message = "Do you want to close Loading Process?";
+					} else {
+						message = "Do you want to close current version?";
+					}
+
 					MessageBox.warning(
-						"Do you want to close Loading Process?", {
+						message, {
 							actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
 							onClose: function (sAction) {
 								if (sAction === "OK") {
@@ -2002,11 +2041,12 @@ sap.ui.define([
 									that.getView().byId("PC").setValue(pc);
 									that.getView().byId("TOT").setValue(val5);
 									that.getView().byId("HEADER_ZZVERSION").setValue(val6);
+									that.getView().byId("VLOCK").setSelected(false);
 									that.onVer();
 
 									if (l_mark1 === "X") {
 										that.onblank(that);
-										that.onPri();
+										that.onPri(that, l_mark1);
 										that.getView().byId("CONF").setSelected(false);
 										that.getView().byId("LOADORD").setValue();
 										that.getView().byId("BOX").setValue();
@@ -2068,7 +2108,8 @@ sap.ui.define([
 											POSNR: oThisObj.POSNR,
 											MATNR: oThisObj.MATNR,
 											VRKME: oThisObj.VRKME,
-											KWMENG: l_qtyc
+											KWMENG: l_qtyc,
+											PSTYV: oThisObj.ITEMCAT
 										});
 									}
 
@@ -2095,6 +2136,7 @@ sap.ui.define([
 											that.getView().byId("PC").setValue(pc);
 											that.getView().byId("TOT").setValue(val5);
 											that.getView().byId("HEADER_ZZVERSION").setValue(val6);
+											that.getView().byId("VLOCK").setSelected(false);
 
 											// that.onDel(that);
 
@@ -2108,7 +2150,7 @@ sap.ui.define([
 											that.onVer();
 
 											if (l_mark1 === "X") {
-												that.onPri();
+												that.onPri(that, l_mark1);
 												that.getView().byId("CONF").setSelected(false);
 												that.getView().byId("LOADORD").setValue();
 												that.getView().byId("BOX").setValue();

@@ -69,9 +69,9 @@
 					sap:sortable="false" sap:filterable="false"/><Property Name="CTR_PC" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Int2" sap:creatable="false" sap:updatable="false"
 					sap:sortable="false" sap:filterable="false"/></EntityType>
 			<EntityType Name="PRINT" m:HasStream="true" sap:content-version="1">
-				<Key><PropertyRef Name="VBELN"/><PropertyRef Name="KUNNR"/><PropertyRef Name="DATE"/></Key><Property Name="MIMETYPE" Type="Edm.String" Nullable="false" MaxLength="100" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+				<Key><PropertyRef Name="VBELN"/><PropertyRef Name="KUNNR"/><PropertyRef Name="DATE"/><PropertyRef Name="VER"/></Key><Property Name="MIMETYPE" Type="Edm.String" Nullable="false" MaxLength="100" sap:unicode="false" sap:creatable="false" sap:updatable="false"
 					sap:sortable="false" sap:filterable="false"/><Property Name="VBELN" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Delivery" sap:sortable="false"/><Property Name="CONTENT" Type="Edm.Binary" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false"
-					sap:sortable="false" sap:filterable="false"/><Property Name="KUNNR" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:sortable="false"/><Property Name="DATE" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:sortable="false"/></EntityType>
+					sap:sortable="false" sap:filterable="false"/><Property Name="KUNNR" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:sortable="false"/><Property Name="DATE" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:sortable="false"/><Property Name="VER" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:sortable="false"/></EntityType>
 			<EntityType Name="MATERIALIN" sap:content-version="1">
 				<Key><PropertyRef Name="MATNR"/></Key><Property Name="MATNR" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material" sap:creatable="false"
 					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="MAKTX" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Description" sap:creatable="false"

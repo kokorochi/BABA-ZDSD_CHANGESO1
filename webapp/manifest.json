@@ -126,7 +126,7 @@
 		}
 	},
 	"sap.platform.abap": {
-		"uri": "/sap/bc/ui5_ui5/sap/zdsd_changeso1/webapp",
+		"uri": "/sap/bc/ui5_ui5/sap/zdsd_changesovr/webapp",
 		"_version": "1.1.0"
 	}
 }
