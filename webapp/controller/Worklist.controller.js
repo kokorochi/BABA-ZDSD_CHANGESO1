@@ -420,6 +420,27 @@ sap.ui.define([
 
 			},
 
+			// onEdes: function () {
+			// 	var that = this;
+			// 	that.getView().byId("EDES").setValue();
+			// 	var input = this.getView().byId("FET").getValue();
+			// 	if (input !== "") {
+			// 		var oTable1 = that.getView().byId("table1");
+			// 		var oModel1 = oTable1.getModel();
+			// 		var aItems1 = oModel1.oData.data; //All rows
+
+			// 		for (var iRowIndex2 = 0; iRowIndex2 < aItems1.length; iRowIndex2++) {
+			// 			var l_maktx = aItems1[iRowIndex2].MAKTX;
+			// 			var l_eanb = aItems1[iRowIndex2].EANB;
+			// 			var l_eanp = aItems1[iRowIndex2].EANP;
+
+			// 			if (l_eanb === input || l_eanp === input) {
+			// 				this.getView().byId("EDES").setValue(l_maktx);
+			// 			}
+			// 		}
+			// 	}
+			// },
+
 			onAddS: function (oEvent) { //sear by Material dialog
 				var that = this;
 				var oView = that.getView();
@@ -1759,6 +1780,7 @@ sap.ui.define([
 
 				that.getView().byId("FET").setValue();
 				that.getView().byId("FETV").setValue();
+				that.getView().byId("EDES").setValue();
 
 				// that.byId("Dialog").destroy();
 			},
@@ -2479,6 +2501,27 @@ sap.ui.define([
 				// }
 				this._applySearch(aTableSearchState);
 
+			},
+
+			onEdes: function (oEvent) {
+				var that = this;
+				that.getView().byId("EDES").setValue();
+				var viewFET = this.getView().byId("FET");
+				var ean11Input = viewFET.getValue();
+				if (ean11Input !== ""){
+					var matListTable = that.getView().byId("materialListTable");
+					var matListItems = matListTable.getItems();
+						
+					for (var iRowIndex = 0; iRowIndex < matListItems.length; iRowIndex++){
+						var maktx    = matListItems[iRowIndex].getCells()[1].getText();
+						var ean11Box = matListItems[iRowIndex].getCells()[2].getText();
+						var ean11Pc  = matListItems[iRowIndex].getCells()[3].getText();
+						
+						if (ean11Input === ean11Box || ean11Input === ean11Pc){
+							that.getView().byId("EDES").setValue(maktx);
+						} 
+					}	
+				}
 			},
 
 			/* =========================================================== */

@@ -4,27 +4,27 @@
 		<semantic:content>
 			<form:SimpleForm layout="ResponsiveGridLayout" editable="true" labelSpanL="1" labelSpanM="2" columnsL="2" columnsM="2">
 				<!--<HBox>-->
-				<Label text="Route" required="true" />
+				<Label text="Route" required="true"/>
 				<ComboBox id="oSelect1" items="{ path: '/CUSTOMERSet', sorter: { path: 'KUNNR' } }" width="auto" change="onClr">
 					<core:ListItem key="{KUNNR}" text="{KUNNR} - {NAME1}"/>
 				</ComboBox>
 				<!--</HBox>-->
-				<Label text="Date" required="true" />
+				<Label text="Date" required="true"/>
 				<HBox>
-					<DatePicker id="DATE" width="auto" displayFormat="dd.MM.YYYY" valueFormat="dd.MM.YYYY" change="onClr" />
+					<DatePicker id="DATE" width="auto" displayFormat="dd.MM.YYYY" valueFormat="dd.MM.YYYY" change="onClr"/>
 					<Button xmlns="sap.m" text="Fetch" id="button0" press="onGet" width="auto"/>
-				</HBox>	
+				</HBox>
 				<HBox>
-					<Label text="Ord :" />
-					<Input id="LOADORD" textAlign="Right" editable="false" />
-					<Input id="HEADER_ZZVERSION" textAlign="Right" editable="false" />
+					<Label text="Ord :"/>
+					<Input id="LOADORD" textAlign="Right" editable="false"/>
+					<Input id="HEADER_ZZVERSION" textAlign="Right" editable="false"/>
 				</HBox>
 				<HBox>
 					<Label text="Choose Version" required="true"/>
-					<ComboBox id="oSelect3" items="{ path: '/data'}" width="40%" >
+					<ComboBox id="oSelect3" items="{ path: '/data'}" width="40%">
 						<core:ListItem key="{VERN}" text="{VERN}"/>
 					</ComboBox>
-				</HBox> 
+				</HBox>
 			</form:SimpleForm>
 			<!--<Panel expandable="true" expanded="false">-->
 			<!--	<HBox>-->
@@ -50,41 +50,41 @@
 				<!--	</Toolbar>-->
 				<!--</headerToolbar>-->
 				<columns>
-					<Column id="nameColumn0" vAlign="Middle" width="7%" >
+					<Column id="nameColumn0" vAlign="Middle" width="7%">
 						<!--<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/>-->
 					</Column>
-					<Column id="nameColumn12" vAlign="Middle" width="5%" >
+					<Column id="nameColumn12" vAlign="Middle" width="5%">
 						<!--<Text text="Ac.QTY" id="col5"/>-->
 					</Column>
-					<Column id="nameColumn1" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" visible="false" >
+					<Column id="nameColumn1" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" visible="false">
 						<!--<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/>-->
 					</Column>
-					<Column id="nameColumn2" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" >
+					<Column id="nameColumn2" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline">
 						<Text text="Mat" id="col1"/>
 					</Column>
-					<Column id="nameColumn3" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" >
+					<Column id="nameColumn3" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline">
 						<Text text="UOM" id="col2"/>
 					</Column>
-					<Column id="nameColumn4" vAlign="Top" >
+					<Column id="nameColumn4" vAlign="Top">
 						<Text text="Pl.QTY" id="col3"/>
 					</Column>
-					<Column id="nameColumn5" vAlign="Top" >
+					<Column id="nameColumn5" vAlign="Top">
 						<Text text="Ac.QTY" id="col4"/>
 					</Column>
-					<Column id="nameColumn6" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" visible="false" >
+					<Column id="nameColumn6" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" visible="false">
 						<!--<Text text="Ac.QTY" id="col5"/>-->
 					</Column>
 					<!--<Column id="nameColumn7" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" visible="false">-->
 					<!--<Text text="Ac.QTY:" id="col5"/>-->
 					<!--</Column>-->
-					<Column id="nameColumn7" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" visible="false" >
+					<Column id="nameColumn7" vAlign="Top" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" visible="false">
 						<!--<Text text="Ac.QTY" id="col5"/>-->
 					</Column>
-					<Column id="nameColumn8" vAlign="Top" hAlign="Center" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" >
-						<Text text="Ver." id="col8" />
+					<Column id="nameColumn8" vAlign="Top" hAlign="Center" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline">
+						<Text text="Ver." id="col8"/>
 					</Column>
-					<Column id="nameColumn9" vAlign="Top" hAlign="Center" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline" >
-						<Text text="Ver.L" id="col9" />
+					<Column id="nameColumn9" vAlign="Top" hAlign="Center" minScreenWidth="Small" demandPopin="true" popinDisplay="Inline">
+						<Text text="Ver.L" id="col9"/>
 					</Column>
 				</columns>
 				<items>
@@ -107,20 +107,40 @@
 					</ColumnListItem>
 				</items>
 			</Table>
+			
+			<Table id="materialListTable" visible="false"
+			items="{ path: '/MATERIALINSet', sorter: [ { path: 'MATNR', descending: false } ], operationMode: 'Client' }" >
+				<columns>
+					<Column id="dialogTableCol1"></Column>
+					<Column id="dialogTableCol2"></Column>
+					<Column id="dialogTableCol3"></Column>
+					<Column id="dialogTableCol4"></Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<Text id="dialogTableMATNR" text="{MATNR}" class="democlass_font"/>
+							<Text id="dialogTableMAKTX" text="{MAKTX}" class="democlass_font"/>
+							<Text id="dialogTableEAN11_BOX" text="{EAN11_BOX}" class="democlass_font"/>
+							<Text id="dialogTableEAN11_PC" text="{EAN11_PC}" class="democlass_font"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			
 			<Panel expandable="true" expanded="false" backgroundDesign="Solid" headerText="Search/Add by Material" visible="false">
 				<form:SimpleForm>
-					<!--<Label id="L4" width="100%" text="Add/New Material"></Label>-->
+					<Label id="L4" width="100%" text="Add/New Material"></Label>
 					<!--<Input id="NMATNR" editable="true" width="auto"></Input>-->
 					<SearchField id="NMATNR" placeholder="Search for Material" enableSuggestions="true" search="onSearchA" suggest="onSuggestM"
-						suggestionItems="{ path: '/MATERIALINSet', sorter: { path: 'MAKTX' }, parameters: {operationMode: 'Client'}}" width="auto">
+						suggestionItems="{ path: '/data', sorter: { path: 'MAKTX' }, parameters: {operationMode: 'Client'}}" width="auto">
 						<suggestionItems>
 							<SuggestionItem text="{MATNR}" description="{MAKTX}" key="{MATNR}"/>
 						</suggestionItems>
 					</SearchField>
-					
-					<!--<ComboBox id="oSelect2" items="{ path: '/UOMSet', sorter: { path: 'KEY' } }" width="auto">-->
-					<!--	<core:Item text="{MEINS}"/>-->
-					<!--</ComboBox>-->
+					<ComboBox id="oSelect2" items="{ path: '/UOMSet', sorter: { path: 'KEY' } }" width="auto">
+						<core:Item text="{MEINS}"/>
+					</ComboBox>
 					<HBox>
 						<RadioButton groupName="GroupA" text="BOX" selected="true" id="BOXR"/>
 						<RadioButton groupName="GroupA" text="PC" id="PCR"/>
@@ -129,8 +149,8 @@
 				</form:SimpleForm>
 			</Panel>
 			<HBox>
-				<CheckBox selected="false" id="CONF" text="Final Confirmation"/>	
-				<CheckBox selected="false" id="VLOCK" text="Version Close"/>	
+				<CheckBox selected="false" id="CONF" text="Final Confirmation"/>
+				<CheckBox selected="false" id="VLOCK" text="Version Close"/>
 			</HBox>
 			<form:SimpleForm>
 				<HBox>
@@ -145,23 +165,24 @@
 			<Label text="Vehicle Wt in KG:" design="Bold" width="50%"/>
 			<Input id="VWT" editable="false" textAlign="Right"/>
 		</semantic:content>
-	
 		<semantic:customFooterContent>
-			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button17" press="onRest" icon="sap-icon://unlocked" />
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button17" press="onRest" icon="sap-icon://unlocked"/>
 			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button4" press="onAdd" icon="sap-icon://add-product"/>
 			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button5" press="onDelnew" icon="sap-icon://less"/>
 			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button9" press="onRef" icon="sap-icon://refresh"/>
 			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button3" press="onPend" icon="sap-icon://activity-items"/>
 			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button1" press="onSave1" icon="sap-icon://save"/>
-			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button12" press="onAddS" icon="sap-icon://add-product" text="Add Material(by Description)"/>
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button12" press="onAddS" icon="sap-icon://add-product"
+				text="Add Material(by Description)"/>
 			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button13" press="onSearch0" icon="sap-icon://filter" text="Filter Zero Qty"/>
 			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button15" press="onSearchN" icon="sap-icon://filter" text="Filter New Item"/>
 			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button6" press="onPri" icon="sap-icon://print" text="Print"/>
 			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button7" press="onFetch" icon="sap-icon://create-form" text="Show Item"/>
-			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button10" press="onAll" icon="sap-icon://decrease-line-height" text="Show All items"/>
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button10" press="onAll" icon="sap-icon://decrease-line-height"
+				text="Show All items"/>
 			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button19" press="onAddDes" icon="sap-icon://detail-view"
 				text="Search Material(by Description)"/>
-			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button8" press="onSer" icon="sap-icon://search" text="Search by EAN"/>	
+			<Button ariaLabelledBy="__xmlview0--label1" width="auto" id="button8" press="onSer" icon="sap-icon://search" text="Search by EAN"/>
 		</semantic:customFooterContent>
 	</semantic:FullscreenPage>
 </mvc:View>
