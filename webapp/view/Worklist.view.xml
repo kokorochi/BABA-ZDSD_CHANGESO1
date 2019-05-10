@@ -109,7 +109,8 @@
 			</Table>
 			
 			<Table id="materialListTable" visible="false"
-			items="{ path: '/MATERIALINSet', sorter: [ { path: 'MATNR', descending: false } ], operationMode: 'Client' }" >
+			items="{ path: '/MATERIALINSet', sorter: [ { path: 'MATNR', descending: false } ], operationMode: 'Client' }"
+			growing="false" growingScrollToLoad="false" >
 				<columns>
 					<Column id="dialogTableCol1"></Column>
 					<Column id="dialogTableCol2"></Column>
