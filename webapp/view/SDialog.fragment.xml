@@ -1,6 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
 	<Dialog id="Dialog" resizable="false" contentWidth="auto" draggable="true">
-		<Input id="FETS"/>
+		<Input id="FETS" liveChange="onEdes"/>
+		<Input id="EDES" editable="false"/>
 		<beginButton>
 			<Button text="Filter" press="onSOkDialog"/>
 		</beginButton>

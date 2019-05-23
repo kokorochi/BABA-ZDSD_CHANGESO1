@@ -2507,6 +2507,9 @@ sap.ui.define([
 				var that = this;
 				that.getView().byId("EDES").setValue();
 				var viewFET = this.getView().byId("FET");
+				if (typeof viewFET === "undefined") {
+					viewFET = this.getView().byId("FETS");
+				}
 				var ean11Input = viewFET.getValue();
 				if (ean11Input !== ""){
 					var matListTable = that.getView().byId("materialListTable");
