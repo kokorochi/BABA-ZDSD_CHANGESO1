@@ -65,6 +65,9 @@ sap.ui.define([
 				var oModelv = new JSONModel();
 				this.getView().byId("oSelect3").setModel(oModelv);
 				this.getView().byId("oSelect3").getModel().setSizeLimit('50');
+				
+				var myModel = this.getOwnerComponent().getModel();
+				myModel.setSizeLimit(500);
 
 				// var oModelL = new JSONModel();
 				// this.getView().byId("oSelect1").setModel(oModelL);

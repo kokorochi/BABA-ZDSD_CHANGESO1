@@ -107,10 +107,9 @@
 					</ColumnListItem>
 				</items>
 			</Table>
-			
 			<Table id="materialListTable" visible="false"
-			items="{ path: '/MATERIALINSet', sorter: [ { path: 'MATNR', descending: false } ], operationMode: 'Client' }"
-			growing="false" growingScrollToLoad="false" >
+				items="{ path: '/MATERIALINSet', sorter: [ { path: 'MATNR', descending: false } ], operationMode: 'Client' }" growing="false"
+				growingScrollToLoad="false">
 				<columns>
 					<Column id="dialogTableCol1"></Column>
 					<Column id="dialogTableCol2"></Column>
@@ -128,17 +127,16 @@
 					</ColumnListItem>
 				</items>
 			</Table>
-			
 			<Panel expandable="true" expanded="false" backgroundDesign="Solid" headerText="Search/Add by Material" visible="false">
 				<form:SimpleForm>
 					<Label id="L4" width="100%" text="Add/New Material"></Label>
-					<!--<Input id="NMATNR" editable="true" width="auto"></Input>-->
-					<SearchField id="NMATNR" placeholder="Search for Material" enableSuggestions="true" search="onSearchA" suggest="onSuggestM"
-						suggestionItems="{ path: '/data', sorter: { path: 'MAKTX' }, parameters: {operationMode: 'Client'}}" width="auto">
-						<suggestionItems>
-							<SuggestionItem text="{MATNR}" description="{MAKTX}" key="{MATNR}"/>
-						</suggestionItems>
-					</SearchField>
+					<Input id="NMATNR" editable="true" width="auto"></Input>
+					<!--<SearchField id="NMATNR" placeholder="Search for Material" enableSuggestions="true" search="onSearchA" suggest="onSuggestM"-->
+					<!--	suggestionItems="{ path: '/data', sorter: { path: 'MAKTX' }, parameters: {operationMode: 'Client'}}" width="auto">-->
+					<!--	<suggestionItems>-->
+					<!--		<SuggestionItem text="{MATNR}" description="{MAKTX}" key="{MATNR}"/>-->
+					<!--	</suggestionItems>-->
+					<!--</SearchField>-->
 					<ComboBox id="oSelect2" items="{ path: '/UOMSet', sorter: { path: 'KEY' } }" width="auto">
 						<core:Item text="{MEINS}"/>
 					</ComboBox>
@@ -146,7 +144,6 @@
 						<RadioButton groupName="GroupA" text="BOX" selected="true" id="BOXR"/>
 						<RadioButton groupName="GroupA" text="PC" id="PCR"/>
 					</HBox>
-					<Button ariaLabelledBy="__xmlview0--label1" text="Add" width="80px" id="buttona" press="onAddM"/>
 				</form:SimpleForm>
 			</Panel>
 			<HBox>
