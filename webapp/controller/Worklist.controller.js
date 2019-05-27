@@ -497,6 +497,8 @@ sap.ui.define([
 
 					// var cval = Number(val).toFixed(NUM_DECIMAL_PLACES);
 					// aCells[6].setValue(cval);
+					
+					this.onUpdateFinished();
 				}
 			},
 
