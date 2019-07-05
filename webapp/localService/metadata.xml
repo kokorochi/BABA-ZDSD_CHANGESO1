@@ -88,7 +88,8 @@
 					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="MSG" Type="Edm.String" Nullable="false" MaxLength="220" sap:unicode="false" sap:label="Message text" sap:creatable="false"
 					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="VWT" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:label="Net weight"
 					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="VLOCK" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Single-Character Flag"
-					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><NavigationProperty Name="HEADITEMNAV" Relationship="ZDSDO_CHANGESO_SRV.HEADITEMASS" FromRole="FromRole_HEADITEMASS"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="WCHECK" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><NavigationProperty Name="HEADITEMNAV" Relationship="ZDSDO_CHANGESO_SRV.HEADITEMASS" FromRole="FromRole_HEADITEMASS"
 					ToRole="ToRole_HEADITEMASS"/></EntityType>
 			<EntityType Name="ITEM" sap:content-version="1">
 				<Key><PropertyRef Name="VBELN"/></Key><Property Name="NTGEW" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:unit="GEWEI"

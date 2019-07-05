@@ -344,6 +344,7 @@ sap.ui.define([
 				var that = this;
 				that.getView().byId("CONF").setSelected(false);
 				that.getView().byId("VLOCK").setSelected(false);
+				that.getView().byId("DISABLE_WCHECK").setSelected(false);
 				that.getView().byId("NMATNR").setValue();
 				that.getView().byId("LOADORD").setValue();
 				that.getView().byId("VWT").setValue();
@@ -2026,6 +2027,14 @@ sap.ui.define([
 					} else {
 						l_mark2 = "";
 					}
+					
+					// Get disable weight check indicator
+					var wcheck = that.getView().byId("DISABLE_WCHECK").getSelected();
+					if (wcheck === true) {
+						var l_mark3 = "X";
+					} else {
+						l_mark3 = "";
+					}
 
 					that.onBusyS(oBusy);
 
@@ -2046,6 +2055,7 @@ sap.ui.define([
 						oEntry1.VDATU = date;
 						oEntry1.VWT = vwt;
 						oEntry1.VLOCK = l_mark2;
+						oEntry1.WCHECK = l_mark3;
 
 						if ((l_mark1 === "X" || l_mark2 === "Y") && aItems.length === 0) {
 							oEntry1.HEADITEMNAV = [];
