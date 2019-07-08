@@ -65,7 +65,7 @@ sap.ui.define([
 				var oModelv = new JSONModel();
 				this.getView().byId("oSelect3").setModel(oModelv);
 				this.getView().byId("oSelect3").getModel().setSizeLimit('50');
-				
+
 				var myModel = this.getOwnerComponent().getModel();
 				myModel.setSizeLimit(500);
 
@@ -501,7 +501,7 @@ sap.ui.define([
 
 					// var cval = Number(val).toFixed(NUM_DECIMAL_PLACES);
 					// aCells[6].setValue(cval);
-					
+
 					this.onUpdateFinished();
 				}
 			},
@@ -1832,6 +1832,9 @@ sap.ui.define([
 
 				var kunnr = that.getView().byId("oSelect1").getSelectedKey();
 				var date = that.getView().byId("DATE").getValue();
+				var currentDate = new Date();
+				var selectedDate = new Date(date);
+
 				that.getView().byId("LOADORD").setValue();
 				that.getView().byId("BOX").setValue();
 				that.getView().byId("PC").setValue();
@@ -1846,44 +1849,48 @@ sap.ui.define([
 				if (kunnr === "" || date === "") {
 					sap.m.MessageToast.show("Please select Route & Date to Fetch Loading Order");
 				} else {
-					that.onBusyS(oBusy);
-					oModel.read("/LOADORDSet(KUNNR='" + kunnr + "',VDATU='" + date + "')", {
-						success: function (oData, oResponse) {
-							var res;
-							res = oData;
+					//Check selection date
+					if (selectedDate < currentDate) {
+						sap.m.MessageToast.show("Loading can only be done for current or future date");
+					} else {
+						that.onBusyS(oBusy);
+						oModel.read("/LOADORDSet(KUNNR='" + kunnr + "',VDATU='" + date + "')", {
+							success: function (oData, oResponse) {
+								var res;
+								res = oData;
 
-							if (res !== "") {
-								var tbox = that.onConv(res.QTY_BOX);
-								var tpc = that.onConv(res.QTY_PC);
+								if (res !== "") {
+									var tbox = that.onConv(res.QTY_BOX);
+									var tpc = that.onConv(res.QTY_PC);
 
-								var box = tbox + "/" + res.CTR_BOX;
-								var pc = tpc + "/" + res.CTR_PC;
+									var box = tbox + "/" + res.CTR_BOX;
+									var pc = tpc + "/" + res.CTR_PC;
 
-								var ord = res.VBELN;
-								that.getView().byId("BOX").setValue(box);
-								that.getView().byId("PC").setValue(pc);
-								that.getView().byId("TOT").setValue(res.NTGEW);
-								that.getView().byId("LOADORD").setValue(ord);
-								that.getView().byId("VWT").setValue(res.VWT);
-								that.getView().byId("HEADER_ZZVERSION").setValue(res.ZZVERSION);
-								that.onVer();
-								sap.m.MessageToast.show("Loader Order fetched");
+									var ord = res.VBELN;
+									that.getView().byId("BOX").setValue(box);
+									that.getView().byId("PC").setValue(pc);
+									that.getView().byId("TOT").setValue(res.NTGEW);
+									that.getView().byId("LOADORD").setValue(ord);
+									that.getView().byId("VWT").setValue(res.VWT);
+									that.getView().byId("HEADER_ZZVERSION").setValue(res.ZZVERSION);
+									that.onVer();
+									sap.m.MessageToast.show("Loader Order fetched");
+								}
+
+								//************************get values from backend based on filter Date*******************************************//
+								that.onBusyE(oBusy);
+
+							},
+							error: function (oResponse) {
+								that.onBusyE(oBusy);
+								var oMsg = JSON.parse(oResponse.responseText);
+								jQuery.sap.require("sap.m.MessageBox");
+								MessageBox.error(oMsg.error.message.value);
+								//sap.m.MessageToast.show(oMsg.error.message.value);
 							}
-
-							//************************get values from backend based on filter Date*******************************************//
-							that.onBusyE(oBusy);
-
-						},
-						error: function (oResponse) {
-							that.onBusyE(oBusy);
-							var oMsg = JSON.parse(oResponse.responseText);
-							jQuery.sap.require("sap.m.MessageBox");
-							MessageBox.error(oMsg.error.message.value);
-							//sap.m.MessageToast.show(oMsg.error.message.value);
-						}
-					});
+						});
+					}
 				}
-
 			},
 
 			onVer: function (oEvent) {
@@ -2027,7 +2034,7 @@ sap.ui.define([
 					} else {
 						l_mark2 = "";
 					}
-					
+
 					// Get disable weight check indicator
 					var wcheck = that.getView().byId("DISABLE_WCHECK").getSelected();
 					if (wcheck === true) {
@@ -2526,19 +2533,19 @@ sap.ui.define([
 					viewFET = this.getView().byId("FETS");
 				}
 				var ean11Input = viewFET.getValue();
-				if (ean11Input !== ""){
+				if (ean11Input !== "") {
 					var matListTable = that.getView().byId("materialListTable");
 					var matListItems = matListTable.getItems();
-						
-					for (var iRowIndex = 0; iRowIndex < matListItems.length; iRowIndex++){
-						var maktx    = matListItems[iRowIndex].getCells()[1].getText();
+
+					for (var iRowIndex = 0; iRowIndex < matListItems.length; iRowIndex++) {
+						var maktx = matListItems[iRowIndex].getCells()[1].getText();
 						var ean11Box = matListItems[iRowIndex].getCells()[2].getText();
-						var ean11Pc  = matListItems[iRowIndex].getCells()[3].getText();
-						
-						if (ean11Input === ean11Box || ean11Input === ean11Pc){
+						var ean11Pc = matListItems[iRowIndex].getCells()[3].getText();
+
+						if (ean11Input === ean11Box || ean11Input === ean11Pc) {
 							that.getView().byId("EDES").setValue(maktx);
-						} 
-					}	
+						}
+					}
 				}
 			},
 
