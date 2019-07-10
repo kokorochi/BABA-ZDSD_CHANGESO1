@@ -149,6 +149,8 @@
 			<HBox>
 				<CheckBox selected="false" id="CONF" text="Final Confirmation"/>
 				<CheckBox selected="false" id="VLOCK" text="Version Close"/>
+			</HBox>
+			<HBox>
 				<CheckBox selected="false" id="DISABLE_WCHECK" text="Disable Weight check"/>
 			</HBox>
 			<form:SimpleForm>
