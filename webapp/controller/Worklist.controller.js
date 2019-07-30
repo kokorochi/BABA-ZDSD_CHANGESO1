@@ -830,6 +830,24 @@ sap.ui.define([
 			},
 
 			onPri: function (oEvent, final) {
+				this._printForm(oEvent, final, "");
+			},
+
+			onPrintItemized: function () {
+				this._callFragment("PrintItemizedDialog");
+			},
+
+			onPrintItemizedOk: function (oEvent) {
+				var selectedUom = this.byId("rbUomType").getSelectedIndex();
+				this.byId("PrintItemizedDialog").close();
+				this._printForm(oEvent, "", selectedUom);
+			},
+
+			onPrintItemizedClose: function () {
+				this.byId("PrintItemizedDialog").close();
+			},
+
+			_printForm: function (oEvent, final, selectedUom) {
 				var ord = this.getView().byId("LOADORD")._lastValue;
 				var kunnr = this.getView().byId("oSelect1").getSelectedKey();
 				var date = this.getView().byId("DATE")._lastValue;
@@ -853,7 +871,7 @@ sap.ui.define([
 				}
 				if (flg === "") {
 					var url = "/sap/opu/odata/sap/ZDSDO_CHANGESO_SRV/PRINTSet(VBELN='" + ord + "',KUNNR='" + kunnr + "',DATE='" +
-						date + "',VER='" + ver + "')/$value";
+						date + "',VER='" + ver + "',UOM='" + selectedUom + "')/$value";
 					sap.m.URLHelper.redirect(url, true);
 					// new sap.m.Link(url, true);
 				}
