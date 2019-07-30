@@ -834,7 +834,25 @@ sap.ui.define([
 			},
 
 			onPrintItemized: function () {
-				this._callFragment("PrintItemizedDialog");
+				var ord = this.getView().byId("LOADORD")._lastValue;
+				var kunnr = this.getView().byId("oSelect1").getSelectedKey();
+				var date = this.getView().byId("DATE")._lastValue;
+				var flg = "";
+				if (ord === "") {
+					sap.m.MessageToast.show("No Loader Order data given");
+					flg = "X";
+				}
+				if (kunnr === "" || kunnr === undefined) {
+					sap.m.MessageToast.show("No Route user selected");
+					flg = "X";
+				}
+				if (date === "" || date === undefined) {
+					sap.m.MessageToast.show("No Date selected");
+					flg = "X";
+				}
+				if (flg === "") {
+					this._callFragment("PrintItemizedDialog");
+				}
 			},
 
 			onPrintItemizedOk: function (oEvent) {
