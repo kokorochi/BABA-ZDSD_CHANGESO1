@@ -1384,7 +1384,11 @@ sap.ui.define([
 									NTGEW: res[iRowIndex].NTGEW,
 									ITEMCAT: res[iRowIndex].ITEMCAT,
 									ZZVERSION: res[iRowIndex].ZZVERSION,
-									ZZVERLOCK: res[iRowIndex].ZZVERLOCK
+									ZZVERLOCK: res[iRowIndex].ZZVERLOCK,
+									// Begin update for FOC item - 20.08.2019
+									ZZACT_FOCQTY: res[iRowIndex].ZZACT_FOCQTY,
+									ZZPLAN_FOCQTY: res[iRowIndex].ZZPLAN_FOCQTY
+										// End update for FOC item - 20.08.2019
 								};
 								if (iRowIndex === 0) {
 									var tbox = that.onConv(res[iRowIndex].QTY_BOX);
@@ -1910,6 +1914,12 @@ sap.ui.define([
 									that.getView().byId("VWT").setValue(res.VWT);
 									that.getView().byId("HEADER_ZZVERSION").setValue(res.ZZVERSION);
 									that.onVer();
+
+									that.headerData = {
+										ZZACT_FOCQTY: res.ZZACT_FOCQTY,
+										ZZPLAN_FOCQTY: res.ZZPLAN_FOCQTY
+									};
+
 									sap.m.MessageToast.show("Loader Order fetched");
 								}
 
@@ -2034,7 +2044,10 @@ sap.ui.define([
 							actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
 							onClose: function (sAction) {
 								if (sAction === "OK") {
-									that.onSave(oEvent);
+									// Begin update for FOC item - 20.08.2019
+									// that.onSave(oEvent);
+									that._validateFoc();
+									// End update for FOC item - 20.08.2019
 								}
 							}
 						}
@@ -2043,6 +2056,37 @@ sap.ui.define([
 					that.onSave(oEvent);
 				}
 			},
+
+			// Begin update for FOC item - 20.08.2019
+			_validateFoc: function () {
+				var message = "";
+				var that = this;
+				if (this.headerData.ZZACT_FOCQTY !== this.headerData.ZZPLAN_FOCQTY) {
+					var numDiff = Number(this.headerData.ZZPLAN_FOCQTY) - Number(this.headerData.ZZACT_FOCQTY);
+					var charDiff = String(numDiff);
+					if (numDiff > 0) {
+						message = "Free goods qty is mismatch(" + charDiff + " PC excess), do you want to continue?";
+					} else if (numDiff < 0) {
+						message = "Free goods qty is mismatch(" + charDiff + " PC deficit), do you want to continue?";
+					}
+
+					MessageBox.warning(
+						message, {
+							actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
+							onClose: function (sAction) {
+								if (sAction === "OK") {
+									that.onSave();
+								} else {
+									sap.m.MessageToast.show("Update has been cancelled");
+								}
+							}
+						}
+					);
+				} else {
+					this.onSave();
+				}
+			},
+			// End update for FOC item - 20.08.2019
 
 			onSave: function (oEvent) {
 				var that = this;
@@ -2123,6 +2167,13 @@ sap.ui.define([
 									that.getView().byId("HEADER_ZZVERSION").setValue(val6);
 									that.getView().byId("VLOCK").setSelected(false);
 									that.onVer();
+									
+									// Begin update for FOC item - 20.08.2019
+									that.headerData = {
+										ZZACT_FOCQTY: oData.HEADITEMNAV.results[0].ZZACT_FOCQTY,
+										ZZPLAN_FOCQTY: oData.HEADITEMNAV.results[0].ZZPLAN_FOCQTY
+									};
+									// End update for FOC item - 20.08.2019
 
 									if (l_mark1 === "X") {
 										that.onblank(that);
