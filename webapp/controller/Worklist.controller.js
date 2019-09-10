@@ -1872,8 +1872,9 @@ sap.ui.define([
 
 				var kunnr = that.getView().byId("oSelect1").getSelectedKey();
 				var date = that.getView().byId("DATE").getValue();
-				var currentDate = new Date().toLocaleDateString();
-				var selectedDate = this.byId("DATE").getDateValue().toLocaleDateString();
+				var currentDate = new Date();
+				currentDate.setHours(0,0,0,0);
+				var selectedDate = this.byId("DATE").getDateValue();
 
 				that.getView().byId("LOADORD").setValue();
 				that.getView().byId("BOX").setValue();
