@@ -76,6 +76,8 @@ sap.ui.define([
 
 				this.oSearchField = this.getView().byId("NMATNR");
 
+				this.globalVar = {};
+
 			},
 
 			onAddDes: function (oEvent) { //sear by Material dialog
@@ -741,38 +743,45 @@ sap.ui.define([
 							var oModel1 = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZDSDO_CHANGESO_SRV/", true);
 							var itemData = oModel.getProperty("/data");
 
-							oModel1.read("/MATERIALSet(MATNR='" + input + "',VRKME='" + uom + "')", {
+							oModel1.read("/MATERIALSet(MATNR='" + input + "',VBELN='" + this.globalVar.VBELN + "',VRKME='" + uom + "')", {
 								success: function (oData, oResponse) {
 									var res = {};
 									res = oData;
 									that.onRef(that);
 
-									var itemRow = {
-										MATNR: res.MATNR,
-										MAKTX: res.MAKTX,
-										VRKME: res.VRKME,
-										EAN11: res.EAN11,
-										KWMENG: val,
-										NEW: "X"
-									};
-
-									if (typeof itemData !== "undefined" && itemData.length > 0) {
-										itemData.push(itemRow);
+									if (res.NEW === "") {
+										sap.m.MessageToast.show(
+											"Material & UOM already exist in this version. Please press 'Show All Items' and edit the existing line accordingly");
 									} else {
-										itemData = [];
-										itemData.push(itemRow);
+
+										var itemRow = {
+											MATNR: res.MATNR,
+											MAKTX: res.MAKTX,
+											VRKME: res.VRKME,
+											EAN11: res.EAN11,
+											KWMENG: val,
+											NEW: "X"
+										};
+
+										if (typeof itemData !== "undefined" && itemData.length > 0) {
+											itemData.push(itemRow);
+										} else {
+											itemData = [];
+											itemData.push(itemRow);
+										}
+
+										// }
+
+										// // Set Model
+										oModel.setData({
+											data: itemData
+										});
+
+										oModel.refresh(true);
+
+										sap.m.MessageToast.show("New Items " + input + "/" + uom + " Added");
+
 									}
-
-									// }
-
-									// // Set Model
-									oModel.setData({
-										data: itemData
-									});
-
-									oModel.refresh(true);
-
-									sap.m.MessageToast.show("New Items " + input + "/" + uom + " Added");
 
 									//************************get values from backend based on filter Date*******************************************//
 
@@ -1873,7 +1882,7 @@ sap.ui.define([
 				var kunnr = that.getView().byId("oSelect1").getSelectedKey();
 				var date = that.getView().byId("DATE").getValue();
 				var currentDate = new Date();
-				currentDate.setHours(0,0,0,0);
+				currentDate.setHours(0, 0, 0, 0);
 				var selectedDate = this.byId("DATE").getDateValue();
 
 				that.getView().byId("LOADORD").setValue();
@@ -1908,6 +1917,9 @@ sap.ui.define([
 									var pc = tpc + "/" + res.CTR_PC;
 
 									var ord = res.VBELN;
+
+									that.globalVar.VBELN = res.VBELN;
+
 									that.getView().byId("BOX").setValue(box);
 									that.getView().byId("PC").setValue(pc);
 									that.getView().byId("TOT").setValue(res.NTGEW);
@@ -2168,7 +2180,7 @@ sap.ui.define([
 									that.getView().byId("HEADER_ZZVERSION").setValue(val6);
 									that.getView().byId("VLOCK").setSelected(false);
 									that.onVer();
-									
+
 									// Begin update for FOC item - 20.08.2019
 									that.headerData = {
 										ZZACT_FOCQTY: oData.HEADITEMNAV.results[0].ZZACT_FOCQTY,
