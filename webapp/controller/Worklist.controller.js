@@ -1787,36 +1787,41 @@ sap.ui.define([
 						var oBusy = new sap.m.BusyDialog();
 						that.onBusyS(oBusy);
 
-						oModel1.read("/MATERIALSet(MATNR='" + input + "',VRKME='')", {
+						oModel1.read("/MATERIALSet(MATNR='" + input + "',VBELN='" + this.globalVar.VBELN + "',VRKME='')", {
 							success: function (oData, oResponse) {
 
 								var res = {};
 								res = oData;
 
-								if (res !== "") {
-									var itemRow = {
-										MATNR: res.MATNR,
-										MAKTX: res.MAKTX,
-										VRKME: res.VRKME,
-										EAN11: res.EAN11,
-										KWMENG: qval, //added
-										NEW: "X"
-									};
+								if (res.NEW === "") {
+									sap.m.MessageToast.show(
+										"Material & UOM already exist in this version. Please press 'Show All Items' and edit the existing line accordingly");
+								} else {
+									if (res !== "") {
+										var itemRow = {
+											MATNR: res.MATNR,
+											MAKTX: res.MAKTX,
+											VRKME: res.VRKME,
+											EAN11: res.EAN11,
+											KWMENG: qval, //added
+											NEW: "X"
+										};
 
-									if (typeof itemData !== "undefined" && itemData.length > 0) {
-										itemData.push(itemRow);
-									} else {
-										itemData = [];
-										itemData.push(itemRow);
+										if (typeof itemData !== "undefined" && itemData.length > 0) {
+											itemData.push(itemRow);
+										} else {
+											itemData = [];
+											itemData.push(itemRow);
+										}
+
+										// // Set Model
+										oModel.setData({
+											data: itemData
+										});
+										oModel.refresh(true);
 									}
-
-									// // Set Model
-									oModel.setData({
-										data: itemData
-									});
-									oModel.refresh(true);
+									sap.m.MessageToast.show("Item " + res.MATNR + " added");
 								}
-								sap.m.MessageToast.show("Item " + res.MATNR + " added");
 
 								//************************get values from backend based on filter Date*******************************************//
 								that.onBusyE(oBusy);
