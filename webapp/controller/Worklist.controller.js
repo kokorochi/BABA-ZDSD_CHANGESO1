@@ -227,7 +227,7 @@ sap.ui.define([
 				// } else {
 				// that.onblank(that);
 				var vbeln = that.getView().byId("LOADORD").getValue();
-				var date = that.getView().byId("DATE").getValue();
+				var date = this._convertDateToSAP(that.getView().byId("DATE").getValue());
 
 				if (vbeln === "" || date === "") {
 					sap.m.MessageToast.show("Loader Order or date can not be blank");
@@ -845,7 +845,7 @@ sap.ui.define([
 			onPrintItemized: function () {
 				var ord = this.getView().byId("LOADORD")._lastValue;
 				var kunnr = this.getView().byId("oSelect1").getSelectedKey();
-				var date = this.getView().byId("DATE")._lastValue;
+				var date = this._convertDateToSAP(this.getView().byId("DATE")._lastValue);
 				var flg = "";
 				if (ord === "") {
 					sap.m.MessageToast.show("No Loader Order data given");
@@ -877,7 +877,7 @@ sap.ui.define([
 			_printForm: function (oEvent, final, selectedUom) {
 				var ord = this.getView().byId("LOADORD")._lastValue;
 				var kunnr = this.getView().byId("oSelect1").getSelectedKey();
-				var date = this.getView().byId("DATE")._lastValue;
+				var date = this._convertDateToSAP(this.getView().byId("DATE")._lastValue);
 				var flg = "";
 				if (ord === "") {
 					sap.m.MessageToast.show("No Loader Order data given");
@@ -1025,7 +1025,7 @@ sap.ui.define([
 				} else {
 					that.onblank(that);
 					var vbeln = that.getView().byId("LOADORD").getValue();
-					var date = that.getView().byId("DATE").getValue();
+					var date = this._convertDateToSAP(that.getView().byId("DATE").getValue());
 
 					if (vbeln === "" || date === "") {
 						sap.m.MessageToast.show("Loader Order or date can not be blank");
@@ -1063,7 +1063,7 @@ sap.ui.define([
 				}
 
 				var vbeln = that.getView().byId("LOADORD").getValue();
-				var date = that.getView().byId("DATE").getValue();
+				var date = this._convertDateToSAP(that.getView().byId("DATE").getValue());
 				var oModel = that.getView().byId("table").getModel();
 
 				var zzversion = that.getView().byId("oSelect3").getSelectedKey();
@@ -1294,7 +1294,7 @@ sap.ui.define([
 				} else {
 					that.onblank(that);
 					var vbeln = that.getView().byId("LOADORD").getValue();
-					var date = that.getView().byId("DATE").getValue();
+					var date = this._convertDateToSAP(that.getView().byId("DATE").getValue());
 
 					if (vbeln === "" || date === "") {
 						sap.m.MessageToast.show("Loader Order or date can not be blank");
@@ -1332,7 +1332,7 @@ sap.ui.define([
 				var oModel = that.getView().byId("table").getModel();
 
 				var vbeln = that.getView().byId("LOADORD").getValue();
-				var date = that.getView().byId("DATE").getValue();
+				var date = this._convertDateToSAP(that.getView().byId("DATE").getValue());
 
 				var zzversion = that.getView().byId("oSelect3").getSelectedKey();
 
@@ -1561,7 +1561,7 @@ sap.ui.define([
 				var that = this;
 				var input = that.getView().byId("FETA").getValue();
 				var vbeln = that.getView().byId("LOADORD").getValue();
-				var date = that.getView().byId("DATE").getValue();
+				var date = this._convertDateToSAP(that.getView().byId("DATE").getValue());
 				var oModel = that.getView().byId("table").getModel();
 				var aItems = that.getView().byId("table").getItems(); //All rows  
 
@@ -1885,7 +1885,7 @@ sap.ui.define([
 				var oBusy = new sap.m.BusyDialog();
 
 				var kunnr = that.getView().byId("oSelect1").getSelectedKey();
-				var date = that.getView().byId("DATE").getValue();
+				var date = this._convertDateToSAP(that.getView().byId("DATE").getValue());
 				var currentDate = new Date();
 				currentDate.setHours(0, 0, 0, 0);
 				var selectedDate = this.byId("DATE").getDateValue();
@@ -2111,7 +2111,7 @@ sap.ui.define([
 				var oTable = that.getView().byId("table");
 				var oBusy = new sap.m.BusyDialog();
 				var ord = that.getView().byId("LOADORD")._lastValue;
-				var date = that.getView().byId("DATE")._lastValue;
+				var date = this._convertDateToSAP(that.getView().byId("DATE")._lastValue);
 				var vwt = that.getView().byId("VWT")._lastValue;
 				var oModel2 = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZDSDO_CHANGESO_SRV/", true);
 
@@ -2658,6 +2658,13 @@ sap.ui.define([
 			/* internal methods                                            */
 			/* =========================================================== */
 
+			_convertDateToSAP: function (iDate) {
+				var dateFormatc = sap.ui.core.format.DateFormat.getDateInstance({
+					pattern: "dd.MM.yyyy"
+				});
+				return dateFormatc.format(new Date(iDate));
+			},
+			
 			/**
 			 * Shows the selected item on the object page
 			 * On phones a additional history entry is created
