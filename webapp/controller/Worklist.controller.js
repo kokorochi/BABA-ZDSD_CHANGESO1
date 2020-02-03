@@ -2052,7 +2052,7 @@ sap.ui.define([
 				var vlock = that.getView().byId("VLOCK").getSelected();
 				if (fconf === true || vlock === true) {
 					if (fconf === true) {
-						var message = "Do you want to close Loading Process?";
+						var message = "Ensure that Tour Late Change had been completed (if required). No changes are allowed after Final Confirmation. Do you want to close Loading Process?";
 					} else {
 						message = "Do you want to close current version?";
 					}
